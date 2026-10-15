@@ -6,6 +6,9 @@ dist
 dist-ssr
 release
 
+# Tooling scratch
+.taste-skill
+
 # Env / secrets
 .env
 .env.*

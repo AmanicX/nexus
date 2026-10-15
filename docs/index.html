@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Nexus | a desktop studio for AI characters</title>
+<meta name="description" content="Nexus is a free desktop studio for writing AI characters and living inside their worlds. Bring your own model, hosted or running on your own machine. Windows and Linux.">
+<meta property="og:title" content="Nexus | a desktop studio for AI characters">
+<meta property="og:description" content="Write characters, set the rules, and run the model yourself. Free, open source, Windows and Linux.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0034eb">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top">
+    <img class="brand-mark" src="assets/icon.png" alt="" width="18" height="18">
+    <span>Nexus</span>
+  </a>
+  <nav class="topnav" aria-label="Primary">
+    <a class="toplink" href="https://github.com/AmanicX/nexus">Source</a>
+    <a class="topbtn" href="https://github.com/AmanicX/nexus/releases/latest">Download</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero chapter grain" data-ground="cobalt" data-ink="light">
+    <h1 class="statement">
+      <span class="line line-pale" data-reveal>no one</span>
+      <span class="line line-white" data-reveal data-delay="90">to please.</span>
+    </h1>
+    <svg class="hero-burst" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="100" cy="100" r="62"/>
+        <path d="M100 10 V190 M10 100 H190 M36 36 L164 164 M164 36 L36 164"/>
+      </g>
+    </svg>
+    <div class="hero-foot">
+      <p class="hero-note" data-reveal data-delay="200">Nexus is a desktop studio for writing AI characters and living inside their worlds, with a model you choose, hosted or running on your own machine.</p>
+    </div>
+  </section>
+
+  <figure class="band band--tall" data-ground="deep" data-ink="light">
+    <img src="assets/photo-ridge.jpg" alt="" width="2000" height="1125">
+  </figure>
+
+  <section class="ticker" data-ground="surface" data-ink="light" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-run">( ) thought · " " action · ( : ) their thought · " : " their action · &lt; &gt; god · [ ] world ·</span>
+      <span class="ticker-run">( ) thought · " " action · ( : ) their thought · " : " their action · &lt; &gt; god · [ ] world ·</span>
+    </div>
+  </section>
+
+  <section class="chapter chapter--paper" id="commands" data-ground="paper" data-ink="dark">
+    <h2 class="sr-only">Message commands</h2>
+    <div class="cmd" data-ui data-reveal>
+      <label class="sr-only" for="cmd-filter">Find a command</label>
+      <input class="cmd-input" id="cmd-filter" type="search" placeholder="Find a command" autocomplete="off" spellcheck="false">
+      <div class="cmd-rows" id="cmd-rows">
+        <span class="cmd-sel" aria-hidden="true"></span>
+        <button class="cmd-row is-on" type="button" data-k="thought inner voice mind" aria-pressed="true">
+          <span class="cmd-top">
+            <span class="cmd-name">thought</span>
+            <span class="cmd-caps" aria-hidden="true"><span class="cmd-cap">(</span><span class="cmd-cap">)</span></span>
+          </span>
+          <span class="cmd-say">What a character thinks. It is never said out loud, so it can say anything.</span>
+        </button>
+        <button class="cmd-row" type="button" data-k="action speech dialogue says talk" aria-pressed="false">
+          <span class="cmd-top">
+            <span class="cmd-name">action</span>
+            <span class="cmd-caps" aria-hidden="true"><span class="cmd-cap">"</span><span class="cmd-cap">"</span></span>
+          </span>
+          <span class="cmd-say">What they do or say, in plain words, with no dialogue tag and no narrator.</span>
+        </button>
+        <button class="cmd-row" type="button" data-k="their thought npc mind" aria-pressed="false">
+          <span class="cmd-top">
+            <span class="cmd-name">their thought</span>
+            <span class="cmd-caps" aria-hidden="true"><span class="cmd-cap">(</span><span class="cmd-cap">:</span></span>
+          </span>
+          <span class="cmd-say">Hand an inner voice to anyone else in the scene, not just the lead.</span>
+        </button>
+        <button class="cmd-row" type="button" data-k="their action npc speech" aria-pressed="false">
+          <span class="cmd-top">
+            <span class="cmd-name">their action</span>
+            <span class="cmd-caps" aria-hidden="true"><span class="cmd-cap">"</span><span class="cmd-cap">:</span></span>
+          </span>
+          <span class="cmd-say">Give someone else a line of their own, so a scene holds more than one voice.</span>
+        </button>
+        <button class="cmd-row" type="button" data-k="god force event world" aria-pressed="false">
+          <span class="cmd-top">
+            <span class="cmd-name">god</span>
+            <span class="cmd-caps" aria-hidden="true"><span class="cmd-cap">&lt;</span><span class="cmd-cap">&gt;</span></span>
+          </span>
+          <span class="cmd-say">Force an event onto the page. A storm, a letter, a knock at the door.</span>
+        </button>
+        <button class="cmd-row" type="button" data-k="world state reputation notes" aria-pressed="false">
+          <span class="cmd-top">
+            <span class="cmd-name">world</span>
+            <span class="cmd-caps" aria-hidden="true"><span class="cmd-cap">[</span><span class="cmd-cap">]</span></span>
+          </span>
+          <span class="cmd-say">Move the world itself. Reputation, events and notes that persist between turns.</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <figure class="band" data-ground="deep" data-ink="light">
+    <img src="assets/sky-figure.jpg" alt="A lone figure standing on a dark ridge under a vast twilight sky." width="1600" height="900">
+  </figure>
+
+  <section class="chapter chapter--surface" id="line" data-ground="surface" data-ink="light">
+    <h2 class="sr-only">Type a line</h2>
+    <div class="show" data-ui data-reveal>
+      <div class="show-line">
+        <label class="sr-only" for="show-input">Type a message</label>
+        <input class="show-input" id="show-input" type="text" spellcheck="false" autocomplete="off" value='(not buying it) "sit down,"'>
+        <span class="show-caret" aria-hidden="true"></span>
+      </div>
+      <div class="show-answer" id="show-answer" aria-live="polite">
+        <p class="sline sline--think"><span class="stag">thought</span><span class="stxt">(not buying it)</span></p>
+        <p class="sline sline--act"><span class="stag">you</span><span class="stxt">"sit down,"</span></p>
+      </div>
+    </div>
+    <div class="show-examples">
+      <button type="button" class="show-ex" data-reveal data-delay="60" data-fill='(not buying it) "sit down,"'>(not buying it) "sit down,"</button>
+      <button type="button" class="show-ex" data-reveal data-delay="120" data-fill='"who is there?" : Mira'>"who is there?" : Mira</button>
+      <button type="button" class="show-ex" data-reveal data-delay="180" data-fill="[the river rose]">[the river rose]</button>
+    </div>
+  </section>
+
+  <section class="chapter chapter--paper" id="install" data-ground="paper" data-ink="dark">
+    <div class="how">
+      <h2 class="how-title" data-reveal>How it works</h2>
+
+      <div class="ex" data-reveal>
+        <p class="ex-lead">First, install it.</p>
+        <div class="ex-call ex-call--code">
+<pre><code>git clone https://github.com/AmanicX/nexus.git
+cd nexus &amp;&amp; bash install.sh</code></pre>
+          <button class="copy" type="button" data-copy="git clone https://github.com/AmanicX/nexus.git&#10;cd nexus && bash install.sh">Copy</button>
+        </div>
+        <div class="ex-reply" data-ui>
+          <div class="frag frag-theme">
+            <p class="frag-h">Appearance</p>
+            <ul class="frag-list">
+              <li class="is-on">Chatbot <span>near-black, iOS blue</span></li>
+              <li>Anime <span>dark purple, iOS purple</span></li>
+              <li>World <span>dark green</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex" data-reveal>
+        <p class="ex-lead">Then point it at a model.</p>
+        <div class="ex-call">
+          <div class="frag frag-form" data-ui>
+            <div class="frag-row"><span>Provider</span><span class="frag-val">Ollama</span></div>
+            <div class="frag-row"><span>Base URL</span><span class="frag-val">http://localhost:11434/v1</span></div>
+            <div class="frag-row"><span>Key</span><span class="frag-val">not needed for a local model</span></div>
+          </div>
+        </div>
+        <div class="ex-reply" data-ui>
+          <div class="frag frag-models">
+            <ul class="frag-list">
+              <li class="is-on">llama3.2</li>
+              <li>mistral-nemo</li>
+              <li>qwen3-coder</li>
+              <li>deepseek-r1</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex" data-reveal>
+        <p class="ex-lead">Now write someone.</p>
+        <div class="ex-call">
+          <div class="frag frag-composer" data-ui>
+            <span class="frag-val">(not buying it) "sit down,"</span>
+            <span class="frag-send">Send</span>
+          </div>
+        </div>
+        <div class="ex-reply ex-reply--wide" data-ui>
+          <div class="frag frag-chat">
+            <p class="chat-you"><span class="chat-think">(not buying it)</span> <span class="chat-act">"sit down,"</span></p>
+            <p class="chat-ai"><span class="chat-name">Mira</span> dragged the boat another metre up the mud and would not look at her. "Dawn, then. If the water keeps rising we sleep in the trees."</p>
+            <p class="chat-you"><span class="chat-world">[the river rose]</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ticker ticker--deep ticker--rev" data-ground="deep" data-ink="light" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-run">bring your own model · hosted or local · windows and linux · free and open source · nothing to sign up for ·</span>
+      <span class="ticker-run">bring your own model · hosted or local · windows and linux · free and open source · nothing to sign up for ·</span>
+    </div>
+  </section>
+
+  <figure class="band" data-ground="deep" data-ink="light">
+    <img src="assets/photo-canopy.jpg" alt="" width="2000" height="1125">
+  </figure>
+
+  <section class="chapter chapter--surface" id="questions" data-ground="surface" data-ink="light">
+    <div class="faq">
+      <h2 class="faq-head" data-reveal>Common questions</h2>
+      <div class="faq-grid">
+        <h3 class="faq-q" data-reveal>Is it really uncensored?</h3>
+        <p class="faq-a" data-reveal>Nexus does not filter what your characters say. The model decides, and the model you picked decides with it. Nothing is rewritten on the way back to you.</p>
+        <h3 class="faq-q" data-reveal>What does it cost?</h3>
+        <p class="faq-a" data-reveal>Nothing. Nexus is free and open source. You bring a model key, or you run a model locally and pay nothing at all.</p>
+        <h3 class="faq-q" data-reveal>Which models can I use?</h3>
+        <p class="faq-a" data-reveal>Anything that speaks an OpenAI style chat API. Groq or OpenRouter if you want it hosted, Ollama or LM Studio if you want it on your own machine.</p>
+        <h3 class="faq-q" data-reveal>Does anything leave my machine?</h3>
+        <p class="faq-a" data-reveal>Only the requests you send. With a local model nothing leaves: no account, no telemetry, no server of ours to send it to.</p>
+        <h3 class="faq-q" data-reveal>What do I need to install it?</h3>
+        <p class="faq-a" data-reveal>Windows 10 or later gets an installer. On Linux there is a .deb, an AppImage, an .rpm and a pacman package. No build step, no runtime to install first.</p>
+        <h3 class="faq-q" data-reveal>Where does it keep my chats?</h3>
+        <p class="faq-a" data-reveal>In your own profile folder, as plain files you can read, edit or delete. Characters and world notes live beside them.</p>
+        <h3 class="faq-q" data-reveal>Is this made by an AI company?</h3>
+        <p class="faq-a" data-reveal>No. Nexus talks to those APIs and nothing else. It is not made, endorsed or supported by any of them.</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="band" data-ground="deep" data-ink="light">
+    <img src="assets/sky-mountain.jpg" alt="A starry night sky above the silhouette of a mountain." width="1600" height="900">
+  </figure>
+
+  <section class="chapter cta" id="get" data-ground="accent" data-ink="dark">
+      <a class="cta-band grain" href="https://github.com/AmanicX/nexus/releases/latest">
+      <span class="cta-note">Windows installer, Linux packages, nothing to pay.</span>
+      <svg class="cta-arrow" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+        <path d="M12 36 L36 12 M18 12 H36 V30" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square"/>
+      </svg>
+      <span class="cta-word" data-reveal>download</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="chapter footer" id="colophon" data-ground="deep" data-ink="light">
+  <div class="foot-mark-wrap">
+    <span class="foot-mark" data-reveal>Nexus</span>
+  </div>
+
+  <div class="foot-row">
+    <ul class="foot-places" data-reveal>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Windows installer</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux .deb</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux AppImage</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux .rpm</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux .pacman</a></li>
+    </ul>
+
+    <div class="foot-cols" data-reveal data-delay="90">
+      <ul>
+        <li><a href="https://github.com/AmanicX/nexus">Source code</a></li>
+        <li><a href="https://github.com/AmanicX/nexus/releases">All releases</a></li>
+        <li><a href="https://github.com/AmanicX/nexus/issues">Report a problem</a></li>
+      </ul>
+      <ul>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#line">Try a line</a></li>
+        <li><a href="#install">Install</a></li>
+      </ul>
+      <ul>
+        <li><a href="#questions">Questions</a></li>
+        <li><a href="#get">Download</a></li>
+        <li><a href="#top">Back to the top</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot-legal">
+    <p class="foot-note">Nexus is an independent project and is not affiliated with any AI provider.</p>
+    <p class="foot-credit">Photographs by lee Scott, Caleb Ralston, Vectorbeast and Jon Eckert, via Unsplash.</p>
+    <a class="foot-up" href="#top">Back to the top</a>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
