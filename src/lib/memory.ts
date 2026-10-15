@@ -1,5 +1,5 @@
 import type { Conversation, Settings } from '@/types'
-import { chatGroq, type ChatMessage } from './groq'
+import { chatGroq, providerNeedsKey, type ChatMessage } from './groq'
 
 const TRIGGER_EVERY = 8
 
@@ -15,7 +15,8 @@ export async function updateMemory(opts: {
 }): Promise<string | null> {
   const { settings, conversation } = opts
   const { messages, memory } = conversation
-  if (!settings.memoryEnabled || !settings.apiKey.trim()) return null
+  if (!settings.memoryEnabled) return null
+  if (providerNeedsKey(settings.baseUrl) && !settings.apiKey.trim()) return null
   if (messages.length < TRIGGER_EVERY * 2) return null
   if (messages.length % TRIGGER_EVERY !== 0) return null
 
@@ -39,6 +40,7 @@ export async function updateMemory(opts: {
 
   const result = await chatGroq({
     apiKey: settings.apiKey,
+    baseUrl: settings.baseUrl,
     model: settings.model,
     messages: prompt,
     temperature: 0.3,

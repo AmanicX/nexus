@@ -15,7 +15,7 @@ import {
 import { useStore } from '@/store/useStore'
 import { parseInput } from '@/lib/commands'
 import { buildRequestMessages } from '@/lib/prompt'
-import { streamGroq, chatGroq } from '@/lib/groq'
+import { streamGroq, chatGroq, providerNeedsKey } from '@/lib/groq'
 import { updateMemory } from '@/lib/memory'
 import { extractState } from '@/lib/state'
 import { Avatar } from './Avatar'
@@ -82,12 +82,12 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
     const char = state.characters.find((c) => c.id === conv.characterId)
     const wld = state.worlds.find((w) => w.id === conv.worldId)
 
-    if (!state.settings.apiKey.trim()) {
+    if (providerNeedsKey(state.settings.baseUrl) && !state.settings.apiKey.trim()) {
       addMessage(convId, {
         id: uid('msg'),
         role: 'assistant',
         content:
-          '⚠ No Groq API key set yet. Open **Settings → Connection**, paste your key and save — then send again and I will respond.',
+          '⚠ No API key set yet. Open **Settings → Connection**, choose your provider, paste your key and save — then send again and I will respond.',
         timestamp: Date.now(),
         error: true,
       })
@@ -117,6 +117,7 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
       if (state.settings.streaming) {
         for await (const delta of streamGroq({
           apiKey: state.settings.apiKey,
+          baseUrl: state.settings.baseUrl,
           model: state.settings.model,
           messages,
           temperature: state.settings.temperature,
@@ -131,6 +132,7 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
       } else {
         acc = await chatGroq({
           apiKey: state.settings.apiKey,
+          baseUrl: state.settings.baseUrl,
           model: state.settings.model,
           messages,
           temperature: state.settings.temperature,

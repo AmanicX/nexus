@@ -4,7 +4,7 @@
 
 **A multi-theme, memory-aware AI character chat studio for the desktop.**
 
-Bring your own [Groq](https://console.groq.com/keys) API key · craft characters & worlds · chat with rich role-play controls · packaged natively for **Windows** and **Linux**.
+Bring your own model — [Groq](https://console.groq.com/keys), OpenRouter, OpenAI, or a **local** model via Ollama/LM Studio · craft characters & worlds · chat with rich role-play controls · packaged natively for **Windows** and **Linux**.
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-4c9aff)
@@ -25,9 +25,9 @@ The app ships with **three distinct modes**, each with its own look and behaviou
 - **Anime** — character-driven role-play with a themed cast, avatars and backdrops. Dark purple with iOS purple/pink.
 - **World** — a living, simulated world. Reputation, notable events and notes persist and evolve as you play, tracked in a hidden state block that the app applies for you.
 
-**Privacy and control come first.** Nexus runs natively on your machine, its interface works fully offline, and the *only* network request it ever makes is to `https://api.groq.com` for the model's replies. There is no account, no telemetry, and no bundled API key — you bring your own free Groq key, it is stored locally, and it never leaves your device.
+**Privacy and control come first.** Nexus runs natively on your machine and its interface works fully offline. It only contacts the AI provider *you* choose — there is no account, no telemetry, and no bundled API key. Use a hosted provider (**Groq**, **OpenRouter**, **OpenAI**) or a fully local model via **Ollama** / **LM Studio** on your own hardware.
 
-Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**, using your choice of Groq's fast models for inference. The result is a fast, native-feeling desktop app with streaming replies, three hand-tuned themes, and a full character/world creator.
+Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**, speaking the standard **OpenAI-compatible API** with any endpoint you point it at. The result is a fast, native-feeling desktop app with streaming replies, three hand-tuned themes, and a full character/world creator.
 
 > **Installing is easy and needs no technical skills:** on Windows, download the `.exe`; on Linux, clone this repo and run one script. No Node.js, no npm, no compiling.
 
@@ -43,7 +43,7 @@ Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**
     - [Recommended: the install script](#recommended--the-install-script)
     - [Alternative: download a package directly](#alternative--download-a-package-directly)
     - [Uninstalling](#uninstalling)
-- [Add your API key (first run)](#add-your-api-key-first-run)
+- [Connect a model (first run)](#connect-a-model-first-run)
 - [Command reference](#command-reference)
 - [Troubleshooting](#troubleshooting)
 - [For developers (build from source)](#for-developers-build-from-source)
@@ -59,8 +59,9 @@ Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**
 - **Character & world creator** — design characters with avatars, personalities and greetings; build worlds whose state (reputation, events, notes) persists across the chat.
 - **Per-conversation memory** — the app keeps a running summary so long conversations stay coherent.
 - **Rich command syntax** — mark thoughts, actions, NPC lines, god-commands and world-commands inline (see the [command reference](#command-reference)).
-- **Uncensored by default** — the default system prompt allows mature, unfiltered role-play. You are responsible for what you generate.
-- **Offline-first UI** — the only network request the app ever makes is to `https://api.groq.com`. No accounts, no telemetry, no bundled keys.
+- **Uncensored by default** — the system prompt allows mature, unfiltered role-play and **you choose the model**. Point Nexus at hosted models or a local, unfiltered one. You are responsible for what you generate.
+- **Any provider, any model** — works with any OpenAI-compatible API: **Groq**, **OpenRouter**, **OpenAI**, or fully local models via **Ollama** and **LM Studio**. Fetch and search the provider's live model list, or type any model id.
+- **Offline-capable** — with a local model (Ollama/LM Studio) the app works entirely offline. No accounts, no telemetry, no bundled keys.
 
 ---
 
@@ -137,13 +138,36 @@ chmod +x Nexus-<version>.AppImage && ./Nexus-<version>.AppImage
 
 ---
 
-## Add your API key (first run)
+## Connect a model (first run)
 
-1. Get a **free** API key at <https://console.groq.com/keys>.
-2. Open Nexus and click the **gear / Settings** icon.
-3. Go to the **Connection** tab, paste the key, and click **Save**.
+Nexus talks to any **OpenAI-compatible** endpoint. Open **Settings → Connection** and set three things:
 
-The key is stored **only on your machine** (in the app's local settings). It is never bundled into the app and never committed to this repository.
+1. **Provider** — pick a preset (Groq, OpenRouter, LM Studio, Ollama, OpenAI) or paste your own **Base URL**.
+2. **API key** — paste your key (not needed for local providers).
+3. **Model** — press **↻** to fetch the provider's live model list, search it, and click a model — or type any model id.
+
+| Provider | Base URL | Get a key |
+| -------- | -------- | --------- |
+| Groq | `https://api.groq.com/openai/v1` | <https://console.groq.com/keys> |
+| OpenRouter | `https://openrouter.ai/api/v1` | <https://openrouter.ai/keys> |
+| Ollama (local) | `http://localhost:11434/v1` | none |
+| LM Studio (local) | `http://localhost:1234/v1` | none |
+| OpenAI | `https://api.openai.com/v1` | <https://platform.openai.com/api-keys> |
+
+Keys are stored **only on your machine** and are never bundled into the app or committed to this repository.
+
+### Fully uncensored with a local model (Ollama)
+
+Hosted models still carry their own safety training. For the most unfiltered output, run a model on your own machine — nothing leaves your computer:
+
+```bash
+# 1. install Ollama from https://ollama.com, then:
+ollama pull llama3.2          # or a freer model, e.g. mistral-nemo / dolphin-mixtral
+ollama serve                  # if it is not already running
+
+# 2. in Nexus → Settings → Connection:
+#    Provider = Ollama   ·   press ↻ to list your installed models   ·   pick one
+```
 
 ---
 
@@ -174,7 +198,9 @@ In the **World** theme the model may also emit a hidden `<!--state {"reputation"
 | AppImage won't start | It must be executable: `chmod +x Nexus-*.AppImage`. |
 | `.deb` fails with unmet dependencies | `sudo dpkg -i nexus_*.deb && sudo apt --fix-broken install`. |
 | Windows shows *"Windows protected your PC"* | Expected for unsigned apps: **More info → Run anyway**. |
-| Replies show "401" / "invalid key" | Re-copy the key from <https://console.groq.com/keys> in **Settings → Connection**. |
+| Replies show "401" / "invalid key" | Check the key **and** Base URL in **Settings → Connection**. |
+| Local model: *"Failed to fetch"* | Make sure Ollama/LM Studio is running and the Base URL port matches (`11434` / `1234`). |
+| Replies stop mid-way, mentions rate limit | Hosted providers cap tokens/min — wait a few seconds, or use a local model. |
 
 ---
 
@@ -225,7 +251,7 @@ install.sh        Linux installer (downloads & installs the latest release)
 src/
   components/     UI (chat view, composer, modals, avatars, panels)
   data/           Built-in characters, worlds, avatars, backdrops
-  lib/            Groq client, prompt builder, memory, command parser
+  lib/            OpenAI-compatible client (any provider), prompt builder, memory
   store/          Zustand store (persisted settings & conversations)
   index.css       Design tokens + the three themes
 public/           Static assets (avatars, backdrops, favicon)
@@ -238,4 +264,4 @@ build/            App icon used by electron-builder
 
 Released under the [MIT License](LICENSE) — use it, modify it, ship it, no warranty.
 
-Nexus is an **unofficial** project and is **not affiliated with, endorsed by, or sponsored by Groq**. "Groq" is a trademark of its respective owner. You are responsible for the content you generate and for complying with Groq's terms of service.
+Nexus is an **unofficial** project and is **not affiliated with, endorsed by, or sponsored by** any AI provider it can connect to (Groq, OpenRouter, OpenAI, Ollama, LM Studio, …). All product names are trademarks of their respective owners. You are responsible for the content you generate and for complying with the terms of service of whichever provider you use.

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useStore } from '@/store/useStore'
 import { THEMES } from '@/data/themes'
+import { providerNeedsKey } from '@/lib/groq'
 import { Avatar } from './Avatar'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { cn, timeAgo } from '@/lib/utils'
@@ -26,6 +27,7 @@ export function Sidebar() {
   const activeConversationId = useStore((s) => s.activeConversationId)
   const sidebarOpen = useStore((s) => s.ui.sidebarOpen)
   const apiKey = useStore((s) => s.settings.apiKey)
+  const baseUrl = useStore((s) => s.settings.baseUrl)
   const setUI = useStore((s) => s.setUI)
   const setActiveConversation = useStore((s) => s.setActiveConversation)
   const deleteConversation = useStore((s) => s.deleteConversation)
@@ -35,6 +37,7 @@ export function Sidebar() {
   const [query, setQuery] = useState('')
   const [onlyPinned, setOnlyPinned] = useState(false)
   const [worldPicker, setWorldPicker] = useState(false)
+  const ready = apiKey.trim() !== '' || !providerNeedsKey(baseUrl)
 
   const activeWorld = worlds.find((w) => w.id === activeWorldId)
   const meta = THEMES[theme]
@@ -283,9 +286,9 @@ export function Sidebar() {
             <span
               className={cn(
                 'ml-auto size-2 rounded-full',
-                apiKey ? 'bg-[#30d158]' : 'bg-[#ff9f0a]',
+                ready ? 'bg-[#30d158]' : 'bg-[#ff9f0a]',
               )}
-              title={apiKey ? 'API key set' : 'No API key'}
+              title={ready ? 'AI connected' : 'No API key / provider set'}
             />
           </button>
           <button

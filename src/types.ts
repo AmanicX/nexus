@@ -103,7 +103,9 @@ export interface Conversation {
 
 export interface Settings {
   apiKey: string
+  baseUrl: string
   model: string
+  cachedModels: string[]
   temperature: number
   maxTokens: number
   topP: number

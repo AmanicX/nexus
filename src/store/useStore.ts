@@ -10,6 +10,7 @@ import type {
   WorldState,
 } from '@/types'
 import { DEFAULT_GLOBAL_PROMPT, DEFAULT_USER_PERSONA, PREVIOUS_DEFAULT_GLOBAL_PROMPT } from '@/lib/prompt'
+import { DEFAULT_BASE_URL } from '@/lib/groq'
 import { uid } from '@/lib/utils'
 
 export interface UIState {
@@ -75,7 +76,9 @@ interface State {
 
 export const DEFAULT_SETTINGS: Settings = {
   apiKey: '',
-  model: 'openai/gpt-oss-120b',
+  baseUrl: DEFAULT_BASE_URL,
+  model: 'llama-3.3-70b-versatile',
+  cachedModels: [],
   temperature: 0.85,
   maxTokens: 2048,
   topP: 1,
@@ -418,13 +421,19 @@ export const useStore = create<State>()(
     }),
     {
       name: 'nexus-chat-store',
-      version: 3,
+      version: 4,
       migrate: (persisted: any) => {
         if (persisted?.settings?.globalSystemPrompt === PREVIOUS_DEFAULT_GLOBAL_PROMPT) {
           persisted.settings.globalSystemPrompt = DEFAULT_GLOBAL_PROMPT
         }
         if (persisted?.settings?.model === 'openai/gpt-oss-safeguard-20b') {
           persisted.settings.model = DEFAULT_SETTINGS.model
+        }
+        if (persisted?.settings && !persisted.settings.baseUrl) {
+          persisted.settings.baseUrl = DEFAULT_BASE_URL
+        }
+        if (persisted?.settings && !Array.isArray(persisted.settings.cachedModels)) {
+          persisted.settings.cachedModels = []
         }
         if (persisted?.settings) persisted.settings.apiKey = ''
         return persisted

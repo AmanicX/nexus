@@ -13,7 +13,7 @@ function applyCsp() {
       responseHeaders: {
         ...details.responseHeaders,
         'Content-Security-Policy': [
-          "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://api.groq.com; font-src 'self' data:; media-src 'self'",
+          "default-src 'self'; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; font-src 'self' data:; media-src 'self'",
         ],
       },
     })

@@ -10,6 +10,7 @@ import {
   KeyRound,
   Palette,
   RefreshCw,
+  Search,
   Terminal,
   Trash2,
   Upload,
@@ -17,7 +18,15 @@ import {
   Zap,
 } from 'lucide-react'
 import { useStore } from '@/store/useStore'
-import { GROQ_MODELS, listGroqModels } from '@/lib/groq'
+import {
+  GROQ_MODELS,
+  PROVIDER_PRESETS,
+  DEFAULT_BASE_URL,
+  listGroqModels,
+  providerNeedsKey,
+  presetIdFor,
+  suggestionsFor,
+} from '@/lib/groq'
 import { THEMES, THEME_ORDER } from '@/data/themes'
 import { Modal } from './Modal'
 import { CommandCheatsheet } from './CommandCheatsheet'
@@ -46,18 +55,30 @@ export function SettingsModal() {
   const open = ui.settingsOpen
   const tab = ui.settingsTab
   const [showKey, setShowKey] = useState(false)
-  const [models, setModels] = useState<string[]>([])
   const [testState, setTestState] = useState<'idle' | 'testing' | 'ok' | 'fail'>('idle')
   const [testMsg, setTestMsg] = useState('')
+  const [modelFilter, setModelFilter] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const allModels = Array.from(
-    new Set([...models, ...GROQ_MODELS.map((m) => m.id), settings.model]),
-  )
+  const needsKey = providerNeedsKey(settings.baseUrl)
+  const activePreset = PROVIDER_PRESETS.find((p) => p.baseUrl === settings.baseUrl.trim())
+  const presetId = presetIdFor(settings.baseUrl)
   const curated = GROQ_MODELS.find((m) => m.id === settings.model)
 
+  const modelOptions = Array.from(
+    new Set([
+      ...suggestionsFor(settings.baseUrl),
+      ...settings.cachedModels,
+      ...GROQ_MODELS.map((m) => m.id),
+      settings.model,
+    ]),
+  ).filter(Boolean)
+  const shownModels = modelOptions.filter((m) =>
+    m.toLowerCase().includes(modelFilter.trim().toLowerCase()),
+  )
+
   const testConnection = async () => {
-    if (!settings.apiKey.trim()) {
+    if (needsKey && !settings.apiKey.trim()) {
       setTestState('fail')
       setTestMsg('Add an API key first.')
       return
@@ -65,8 +86,8 @@ export function SettingsModal() {
     setTestState('testing')
     setTestMsg('')
     try {
-      const list = await listGroqModels(settings.apiKey)
-      setModels(list)
+      const list = await listGroqModels(settings.apiKey, settings.baseUrl)
+      updateSettings({ cachedModels: list })
       setTestState('ok')
       setTestMsg(`Connected · ${list.length} models available`)
     } catch (e) {
@@ -127,8 +148,41 @@ export function SettingsModal() {
           {tab === 'connection' && (
             <div className="space-y-5">
               <Section
-                title="Groq API key"
-                hint="Stored only in this browser. Never sent anywhere except Groq."
+                title="Provider"
+                hint="Any OpenAI-compatible API works — pick a preset or paste your own Base URL."
+              >
+                <div className="flex flex-wrap gap-1.5">
+                  {PROVIDER_PRESETS.map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => updateSettings({ baseUrl: p.baseUrl })}
+                      className={cn('chip', settings.baseUrl.trim() === p.baseUrl && 'chip-active')}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={settings.baseUrl}
+                  onChange={(e) => updateSettings({ baseUrl: e.target.value })}
+                  placeholder={DEFAULT_BASE_URL}
+                  className="field font-mono text-xs"
+                  spellCheck={false}
+                />
+                <p className="text-2xs text-faint">
+                  Groq, OpenRouter, LM Studio, Ollama, or your own server. For truly uncensored
+                  role-play, point this at an unfiltered model.
+                </p>
+              </Section>
+
+              <Section
+                title={needsKey ? 'API key' : 'API key (optional)'}
+                hint={
+                  needsKey
+                    ? 'Stored only on this device. Sent only to the provider above.'
+                    : 'Local servers usually ignore the key — leave it blank.'
+                }
               >
                 <div className="flex gap-2">
                   <div className="relative flex-1">
@@ -136,7 +190,7 @@ export function SettingsModal() {
                       type={showKey ? 'text' : 'password'}
                       value={settings.apiKey}
                       onChange={(e) => updateSettings({ apiKey: e.target.value })}
-                      placeholder="gsk_…"
+                      placeholder={activePreset?.keyHint ?? 'your key'}
                       className="field pr-9 font-mono text-xs"
                       spellCheck={false}
                     />
@@ -172,45 +226,83 @@ export function SettingsModal() {
                   </p>
                 )}
                 <p className="text-2xs text-faint">
-                  Get a free key at{' '}
-                  <a
-                    href="https://console.groq.com/keys"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-accent underline underline-offset-2"
-                  >
-                    console.groq.com/keys
-                  </a>
-                  .
+                  {activePreset?.keyUrl ? (
+                    <>
+                      Get a key at{' '}
+                      <a
+                        href={activePreset.keyUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-accent underline underline-offset-2"
+                      >
+                        {activePreset.keyUrl.replace(/^https?:\/\//, '')}
+                      </a>
+                      .
+                    </>
+                  ) : needsKey ? (
+                    'Paste the key for the provider above.'
+                  ) : (
+                    'No key needed for this local provider.'
+                  )}
                 </p>
               </Section>
 
-              <Section title="Model" hint={curated?.note}>
-                <select
-                  value={settings.model}
-                  onChange={(e) => updateSettings({ model: e.target.value })}
-                  className="field appearance-none"
-                >
-                  {allModels.map((m) => (
-                    <option key={m} value={m} className="bg-[#1c1c1e]">
-                      {m}
-                    </option>
-                  ))}
-                </select>
-                <div className="flex flex-wrap gap-1.5">
-                  {GROQ_MODELS.slice(0, 6).map((m) => (
+              <Section title="Model" hint={curated?.note ?? 'Type any model id your provider supports.'}>
+                <div className="flex gap-2">
+                  <input
+                    value={settings.model}
+                    onChange={(e) => updateSettings({ model: e.target.value })}
+                    placeholder="model id"
+                    className="field font-mono text-xs"
+                    spellCheck={false}
+                  />
+                  <button
+                    onClick={testConnection}
+                    disabled={testState === 'testing'}
+                    className="btn shrink-0"
+                    title="Fetch the model list from your provider"
+                  >
+                    <RefreshCw size={15} className={cn(testState === 'testing' && 'animate-spin')} />
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <Search size={13} className="absolute top-1/2 left-3 -translate-y-1/2 text-faint" />
+                  <input
+                    value={modelFilter}
+                    onChange={(e) => setModelFilter(e.target.value)}
+                    placeholder={`Filter ${modelOptions.length} models…`}
+                    className="field pl-8 text-xs"
+                  />
+                </div>
+
+                <div className="scroll-thin max-h-44 overflow-y-auto rounded-xl border border-border">
+                  {shownModels.map((m) => (
                     <button
-                      key={m.id}
-                      onClick={() => updateSettings({ model: m.id })}
-                      className={cn('chip', settings.model === m.id && 'chip-active')}
+                      key={m}
+                      onClick={() => updateSettings({ model: m })}
+                      className={cn(
+                        'flex w-full items-center gap-2 border-b border-border/60 px-3 py-2 text-left font-mono text-xs transition last:border-0 hover:bg-surface-2',
+                        settings.model === m && 'bg-surface-2 text-accent',
+                      )}
                     >
-                      {m.label}
+                      <span className="truncate">{m}</span>
+                      {settings.model === m && <Check size={13} className="ml-auto shrink-0" />}
                     </button>
                   ))}
+                  {shownModels.length === 0 && (
+                    <p className="px-3 py-3 text-2xs text-faint">
+                      No models listed — press ↻ to fetch them from your provider.
+                    </p>
+                  )}
                 </div>
+
                 <p className="text-2xs text-faint">
-                  Groq limits tokens per minute per model. If a reply fails with a rate-limit
-                  note, wait a few seconds and send again.
+                  {presetId === 'ollama'
+                    ? 'Ollama: run “ollama serve”, pull a model (e.g. “ollama pull llama3.2”), then press ↻. Local models are fully unfiltered.'
+                    : presetId === 'lmstudio'
+                      ? 'LM Studio: start its local server, load a model, then press ↻.'
+                      : 'Providers cap tokens per minute. On a rate-limit error, wait a few seconds and retry. ↻ refreshes the list.'}
                 </p>
               </Section>
 
