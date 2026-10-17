@@ -68,7 +68,7 @@ export function Modal({
             exit={{ opacity: 0, transform: 'translateY(30px) scale(0.99)' }}
             transition={{ type: 'spring', stiffness: 420, damping: 38 }}
             className={cn(
-              'panel-solid relative z-10 flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-4xl shadow-2xl will-change-transform sm:my-auto sm:max-h-[88vh] sm:rounded-4xl',
+              'panel-solid relative z-10 flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-4xl shadow-2xl will-change-transform sm:my-auto sm:max-h-[88dvh] sm:rounded-4xl',
               SIZES[size],
             )}
           >
@@ -93,7 +93,7 @@ export function Modal({
                 </div>
                 <button
                   onClick={onClose}
-                  className="btn btn-ghost -mr-1.5 -mt-1 size-9 shrink-0 rounded-full p-0"
+                  className="btn btn-ghost -mr-2 -mt-1.5 grid size-11 shrink-0 place-items-center rounded-full p-0 sm:-mr-1.5 sm:-mt-1 sm:size-9"
                   aria-label="Close"
                 >
                   <X size={18} />
@@ -111,7 +111,7 @@ export function Modal({
             </div>
 
             {footer && (
-              <div className="flex items-center justify-end gap-2 border-t border-border px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-3.5">
+              <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-3.5">
                 {footer}
               </div>
             )}

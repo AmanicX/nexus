@@ -198,6 +198,21 @@
     height: 100%;
   }
 
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none;
+  }
+
+  /* The app shell must match the *visible* viewport — not the largest one — so the
+     composer never hides under the URL bar or the software keyboard. */
+  @supports (height: 100dvh) {
+    body,
+    #root {
+      height: 100dvh;
+    }
+  }
+
   body {
     margin: 0;
     background: var(--c-bg);
@@ -210,6 +225,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow: hidden;
+    overscroll-behavior: none;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -222,6 +238,9 @@
     cursor: pointer;
     font-family: inherit;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
 
   :where(button, a, input, textarea, select, [role='button']) {
@@ -257,6 +276,16 @@
   .scroll-thin {
     scrollbar-width: thin;
     scrollbar-color: var(--c-border-strong) transparent;
+    overscroll-behavior: contain;
+  }
+
+  /* Horizontal chip rails: scrollable, with no scrollbar to eat the row. */
+  .scrollbar-none {
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
   .scroll-thin::-webkit-scrollbar {
     width: 8px;
@@ -378,8 +407,10 @@
   .field::placeholder {
     color: var(--c-faint);
   }
-  .field:hover {
-    background: color-mix(in srgb, var(--c-fill-2) 70%, var(--c-fg) 5%);
+  @media (hover: hover) and (pointer: fine) {
+    .field:hover {
+      background: color-mix(in srgb, var(--c-fill-2) 70%, var(--c-fg) 5%);
+    }
   }
   .field:focus {
     outline: none;
@@ -408,8 +439,10 @@
       filter 0.2s ease,
       box-shadow 0.2s ease;
   }
-  .btn:hover {
-    background: color-mix(in srgb, var(--c-fill) 78%, var(--c-fg) 12%);
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      background: color-mix(in srgb, var(--c-fill) 78%, var(--c-fg) 12%);
+    }
   }
   .btn:active {
     transform: scale(0.965);
@@ -426,18 +459,22 @@
     border-color: transparent;
     box-shadow: var(--shadow-accent);
   }
-  .btn-accent:hover {
-    background: var(--c-accent);
-    filter: brightness(1.07);
+  @media (hover: hover) and (pointer: fine) {
+    .btn-accent:hover {
+      background: var(--c-accent);
+      filter: brightness(1.07);
+    }
   }
 
   .btn-ghost {
     background: transparent;
     border-color: transparent;
   }
-  .btn-ghost:hover {
-    background: var(--c-fill-2);
-    border-color: transparent;
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ghost:hover {
+      background: var(--c-fill-2);
+      border-color: transparent;
+    }
   }
 
   .btn-plain {
@@ -446,9 +483,11 @@
     color: var(--c-accent);
     box-shadow: none;
   }
-  .btn-plain:hover {
-    background: color-mix(in oklab, var(--c-accent) 14%, transparent);
-    color: var(--c-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .btn-plain:hover {
+      background: color-mix(in oklab, var(--c-accent) 14%, transparent);
+      color: var(--c-accent);
+    }
   }
 
   /* chips */
@@ -468,13 +507,54 @@
       color 0.18s ease,
       border-color 0.18s ease;
   }
-  .chip:hover {
-    color: var(--c-fg);
-    background: var(--c-fill);
+  @media (hover: hover) and (pointer: fine) {
+    .chip:hover {
+      color: var(--c-fg);
+      background: var(--c-fill);
+    }
   }
   .chip-active {
     background: var(--c-accent);
     color: var(--c-accent-fg);
+  }
+
+  /* The little "×" inside tag chips. */
+  .chip > button {
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 999px;
+  }
+
+  /* Conversation-row actions: always reachable on touch, hover-revealed only
+     where a real pointer exists (otherwise they are unreachable on phones). */
+  .row-actions {
+    display: flex;
+    gap: 0.125rem;
+  }
+  .row-actions > button {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.75rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .row-actions {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.25rem;
+      display: none;
+    }
+    .group:hover .row-actions,
+    .group:focus-within .row-actions {
+      display: flex;
+    }
+    .row-actions > button {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 
   /* iOS segmented control */
@@ -502,6 +582,12 @@
     color: var(--c-fg);
     background: var(--c-surface-2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Card row of text actions ("Chat / Edit / Copy") — give them a thumb-sized
+     hit area without changing their visual weight. */
+  .card-actions button {
+    padding-block: 0.2rem;
   }
 
   /* iOS switch */
@@ -666,4 +752,76 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Touch / mobile platform layer
+ *  Deliberately unlayered so these beat Tailwind's layered utilities.
+ * ------------------------------------------------------------------ */
+
+/* The app shell tracks the *visual* viewport so the composer never hides
+   behind the software keyboard. `scheduleViewportHeight()` keeps --app-h fresh. */
+#root {
+  height: var(--app-h, 100dvh);
+}
+
+/* Mobile browsers zoom the page when focus lands on an input under 16px, and
+   never zoom back out. Fix the input size — not the zoom. */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  /* Additive safe-area padding on top of each bar's own padding. */
+  .pad-top {
+    padding-top: max(0.625rem, env(safe-area-inset-top, 0px));
+  }
+
+  .pad-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Landscape notch gutters for edge-anchored drawers. */
+  .safe-left {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+
+  .safe-right {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* A taller track gives the native slider thumb a bigger hit area. */
+  input[type='range'] {
+    height: 2.5rem;
+  }
+
+  .card-actions button {
+    padding-block: 0.6rem;
+  }
+
+  .chip > button {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: -0.35rem;
+  }
+
+  /* Secondary controls sit just under the 44px ideal; fatten them for thumbs. */
+  .chip {
+    min-height: 2.25rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  .seg > button {
+    padding: 0.55rem 0.9rem;
+    min-height: 2.5rem;
+  }
+}
+
+/* Controls shouldn't be selectable, or raise the long-press callout. */
+:where(button, [role='button'], .chip, .seg > button) {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }

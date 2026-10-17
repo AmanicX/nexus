@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Releases | Nexus</title>
+<meta name="description" content="Every Nexus release in order: what changed, when it shipped, and where to download the Windows installer or the Linux packages.">
+<meta property="og:title" content="Releases | Nexus">
+<meta property="og:description" content="What shipped, and when. Windows and Linux builds for every version of Nexus.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0034eb">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="releases.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="./">
+    <img class="brand-mark" src="assets/icon.png" alt="" width="18" height="18">
+    <span>Nexus</span>
+  </a>
+  <nav class="topnav" aria-label="Primary">
+    <a class="toplink" href="./">Home</a>
+    <a class="toplink" href="https://github.com/AmanicX/nexus">Source</a>
+    <a class="topbtn" href="#get">Download</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero chapter grain" data-ground="cobalt" data-ink="light">
+    <h1 class="statement">
+      <span class="line line-pale" data-reveal>what shipped,</span>
+      <span class="line line-white" data-reveal data-delay="90">and when.</span>
+    </h1>
+    <svg class="hero-burst" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="100" cy="100" r="62"/>
+        <path d="M100 10 V190 M10 100 H190 M36 36 L164 164 M164 36 L36 164"/>
+      </g>
+    </svg>
+    <div class="hero-foot">
+      <p class="hero-note" data-reveal data-delay="200">Every version of Nexus, in order, with what changed and where to get it. Each build is cut from the same source you can read.</p>
+    </div>
+  </section>
+
+  <section class="chapter chapter--paper" id="index" data-ground="paper" data-ink="dark">
+    <h2 class="sr-only">All versions</h2>
+    <nav class="rel-index" aria-label="Releases">
+      <a href="#v110" data-reveal>
+        <span class="rel-v">1.1.0</span>
+        <span class="rel-w">Bring your own provider</span>
+        <span class="rel-fl">latest</span>
+      </a>
+      <a href="#v100" data-reveal data-delay="70">
+        <span class="rel-v">1.0.0</span>
+        <span class="rel-w">The studio, opened</span>
+        <span class="rel-fl">first release</span>
+      </a>
+    </nav>
+  </section>
+
+  <section class="ticker" data-ground="surface" data-ink="light" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-run">v1.1.0 · v1.0.0 · windows · linux · appimage · deb · rpm · pacman · free ·</span>
+      <span class="ticker-run">v1.1.0 · v1.0.0 · windows · linux · appimage · deb · rpm · pacman · free ·</span>
+    </div>
+  </section>
+
+  <figure class="band band--tall" data-ground="deep" data-ink="light">
+    <img src="assets/sky-mountain.jpg" alt="A starry night sky above the silhouette of a mountain." width="1600" height="900">
+  </figure>
+
+  <section class="chapter chapter--surface" id="v110" data-ground="surface" data-ink="light">
+    <article class="rel">
+      <div class="rel-head">
+        <p class="rel-meta" data-reveal>Released on 15 October 2026 for Windows, Linux and the web</p>
+        <p class="rel-num" data-reveal data-delay="60">1.1.0</p>
+        <h2 class="rel-title" data-reveal data-delay="120">Bring your own provider</h2>
+        <p class="rel-lede" data-reveal data-delay="160">Nexus stopped being a client for one company. It now talks to anything that speaks the OpenAI chat format, hosted or running on your own machine, picked from a single list.</p>
+      </div>
+
+      <div class="rel-changes">
+        <div class="rel-item" data-reveal>
+          <h3>Five providers, one screen</h3>
+          <p>Groq and OpenRouter if you want it hosted. Ollama and LM Studio if you want it local. A fifth option takes any base URL you type yourself.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="60">
+          <h3>A live model list</h3>
+          <p>Instead of a hard-coded handful, Nexus asks the provider what it serves and shows you all of it in a searchable list.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="120">
+          <h3>Local models stay local</h3>
+          <p>Point Nexus at a model on your own machine and no request leaves your network. No account, no key, nothing to pay.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="180">
+          <h3>Your studio moves with you</h3>
+          <p>Characters, worlds and conversations are upgraded in place the first time the new version opens. Nothing to re-enter by hand.</p>
+        </div>
+      </div>
+
+      <div class="rel-get" data-reveal>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.1.0/Nexus-Setup-1.1.0.exe">Windows installer</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.1.0/Nexus-1.1.0.AppImage">Linux AppImage</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.1.0/nexus_1.1.0_amd64.deb">Linux .deb</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.1.0/nexus-1.1.0.x86_64.rpm">Linux .rpm</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.1.0/nexus-1.1.0.pacman">Linux .pacman</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/tag/v1.1.0">Everything in 1.1.0</a>
+      </div>
+    </article>
+  </section>
+
+  <figure class="band" data-ground="deep" data-ink="light">
+    <img src="assets/photo-ridge.jpg" alt="" width="2000" height="1125">
+  </figure>
+
+  <section class="chapter chapter--paper" id="v100" data-ground="paper" data-ink="dark">
+    <article class="rel">
+      <div class="rel-head">
+        <p class="rel-meta" data-reveal>Released on 15 October 2026 for Windows and Linux</p>
+        <p class="rel-num" data-reveal data-delay="60">1.0.0</p>
+        <h2 class="rel-title" data-reveal data-delay="120">The studio, opened</h2>
+        <p class="rel-lede" data-reveal data-delay="160">The first build put the whole thing in one window: write a character, put them somewhere, and talk to them with a model you choose.</p>
+      </div>
+
+      <div class="rel-changes">
+        <div class="rel-item" data-reveal>
+          <h3>Characters</h3>
+          <p>A face, a voice, a persona, a greeting. Canon figures and your own, sitting in the same list.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="60">
+          <h3>Worlds</h3>
+          <p>Places, factions and lore, plus reputation, events and notes that survive from one turn to the next.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="120">
+          <h3>Six commands</h3>
+          <p>Mark a thought, mark an action, hand a line to someone else, force an event, and move the world itself.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="180">
+          <h3>Three themes</h3>
+          <p>Chatbot, Anime and World, each with its own palette and its own mood.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="240">
+          <h3>Memory</h3>
+          <p>A rolling summary per conversation, so a long scene keeps its shape instead of drifting.</p>
+        </div>
+        <div class="rel-item" data-reveal data-delay="300">
+          <h3>An installer, not a build</h3>
+          <p>A Windows setup file and Linux packages, ready to run. Nothing to compile first.</p>
+        </div>
+      </div>
+
+      <div class="rel-get" data-reveal>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.0.0/Nexus-Setup-1.0.0.exe">Windows installer</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.0.0/Nexus-1.0.0.AppImage">Linux AppImage</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.0.0/nexus_1.0.0_amd64.deb">Linux .deb</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.0.0/nexus-1.0.0.x86_64.rpm">Linux .rpm</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/download/v1.0.0/nexus-1.0.0.pacman">Linux .pacman</a>
+        <a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/tag/v1.0.0">Everything in 1.0.0</a>
+      </div>
+    </article>
+  </section>
+
+  <figure class="band" data-ground="deep" data-ink="light">
+    <img src="assets/sky-figure.jpg" alt="A lone figure standing on a dark ridge under a vast twilight sky." width="1600" height="900">
+  </figure>
+
+  <section class="chapter chapter--paper" id="get" data-ground="paper" data-ink="dark">
+    <div class="how">
+      <h2 class="how-title" data-reveal>Get it</h2>
+
+      <div class="rel-ways" data-reveal>
+        <article class="rel-way">
+          <h3>In a browser</h3>
+          <p>Nexus also runs as a web app on this site. Open it, add it to your home screen, and it behaves like something you installed.</p>
+          <ul>
+            <li class="rel-soft">Works on phone and tablet</li>
+            <li class="rel-soft">Nothing to download</li>
+          </ul>
+          <p><a class="rel-dl" href="app/">Open the web app</a></p>
+        </article>
+
+        <article class="rel-way">
+          <h3>On Windows</h3>
+          <p>The installer carries everything it needs. Save the file, run it, and Nexus opens.</p>
+          <ul>
+            <li class="rel-soft">Windows 10 or later</li>
+            <li class="rel-soft">Choose your own install folder</li>
+          </ul>
+          <p><a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/latest">Download the latest .exe</a></p>
+        </article>
+
+        <article class="rel-way">
+          <h3>On Linux</h3>
+          <p>Four builds ship with every release, so you can match the one your system already uses.</p>
+          <ul>
+            <li class="rel-soft">AppImage, .deb, .rpm, .pacman</li>
+            <li class="rel-soft">64-bit desktop</li>
+          </ul>
+          <p><a class="rel-dl" href="https://github.com/AmanicX/nexus/releases/latest">See the latest release</a></p>
+        </article>
+      </div>
+
+      <div class="ex" data-reveal>
+        <p class="ex-lead">Or build it yourself.</p>
+        <div class="ex-call ex-call--code">
+<pre><code>git clone https://github.com/AmanicX/nexus.git
+cd nexus &amp;&amp; bash install.sh</code></pre>
+          <button class="copy" type="button" data-copy="git clone https://github.com/AmanicX/nexus.git&#10;cd nexus && bash install.sh">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <figure class="band" data-ground="deep" data-ink="light">
+    <img src="assets/photo-canopy.jpg" alt="" width="2000" height="1125">
+  </figure>
+
+  <section class="chapter chapter--surface" id="versions" data-ground="surface" data-ink="light">
+    <div class="faq">
+      <h2 class="faq-head" data-reveal>About versions</h2>
+      <div class="faq-grid">
+        <h3 class="faq-q" data-reveal>How do the numbers work?</h3>
+        <p class="faq-a" data-reveal>Three of them. The first goes up when something stops working the old way, the second for new features, and the third for fixes. 1.1.0 is a feature release on top of 1.0.0.</p>
+        <h3 class="faq-q" data-reveal>How do updates arrive?</h3>
+        <p class="faq-a" data-reveal>The desktop app can check for a newer version on launch and install it over the old one. The web app picks up a new build the next time you open it.</p>
+        <h3 class="faq-q" data-reveal>Do I lose anything by updating?</h3>
+        <p class="faq-a" data-reveal>No. Characters, worlds and conversations are upgraded in place the first time the new version starts.</p>
+        <h3 class="faq-q" data-reveal>Can I run it without installing?</h3>
+        <p class="faq-a" data-reveal>Yes. Open the web app in your browser, or clone the source and run it from there.</p>
+        <h3 class="faq-q" data-reveal>Where does a release come from?</h3>
+        <p class="faq-a" data-reveal>One tag on one commit. A build job compiles Windows and Linux from that exact source and attaches the results to the release.</p>
+        <h3 class="faq-q" data-reveal>Something is broken. Where do I report it?</h3>
+        <p class="faq-a" data-reveal>On the project's issue tracker, with your version number and what you were doing. That is the fastest route to a fix.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter cta" id="download" data-ground="accent" data-ink="dark">
+    <a class="cta-band grain" href="https://github.com/AmanicX/nexus/releases/latest">
+      <span class="cta-note">Windows installer, Linux packages, nothing to pay.</span>
+      <svg class="cta-arrow" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+        <path d="M12 36 L36 12 M18 12 H36 V30" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square"/>
+      </svg>
+      <span class="cta-word" data-reveal>download</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="chapter footer" id="colophon" data-ground="deep" data-ink="light">
+  <div class="foot-mark-wrap">
+    <span class="foot-mark" data-reveal>Nexus</span>
+  </div>
+
+  <div class="foot-row">
+    <ul class="foot-places" data-reveal>
+      <li><a href="app/">Web app</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Windows installer</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux .deb</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux AppImage</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux .rpm</a></li>
+      <li><a href="https://github.com/AmanicX/nexus/releases/latest">Linux .pacman</a></li>
+    </ul>
+
+    <div class="foot-cols" data-reveal data-delay="90">
+      <ul>
+        <li><a href="https://github.com/AmanicX/nexus">Source code</a></li>
+        <li><a href="https://github.com/AmanicX/nexus/releases">All releases</a></li>
+        <li><a href="https://github.com/AmanicX/nexus/issues">Report a problem</a></li>
+      </ul>
+      <ul>
+        <li><a href="#index">Versions</a></li>
+        <li><a href="#v110">1.1.0</a></li>
+        <li><a href="#v100">1.0.0</a></li>
+      </ul>
+      <ul>
+        <li><a href="#get">Get it</a></li>
+        <li><a href="#versions">About versions</a></li>
+        <li><a href="./">Home</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot-legal">
+    <p class="foot-note">Nexus is an independent project and is not affiliated with any AI provider.</p>
+    <a class="foot-up" href="#top">Back to the top</a>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

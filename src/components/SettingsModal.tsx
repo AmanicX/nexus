@@ -123,15 +123,15 @@ export function SettingsModal() {
       size="lg"
       bodyClassName="p-0"
     >
-      <div className="flex min-h-[58vh] flex-col sm:flex-row">
+      <div className="flex min-h-[58dvh] flex-col sm:flex-row">
         {/* nav */}
-        <nav className="flex gap-1 overflow-x-auto border-b border-border p-2 sm:w-44 sm:shrink-0 sm:flex-col sm:overflow-visible sm:border-r sm:border-b-0 sm:p-3">
+        <nav className="scrollbar-none flex gap-1 overflow-x-auto border-b border-border p-2 sm:w-44 sm:shrink-0 sm:flex-col sm:overflow-visible sm:border-r sm:border-b-0 sm:p-3">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setUI({ settingsTab: t.id })}
               className={cn(
-                'flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium whitespace-nowrap transition',
+                'flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-3 text-sm font-medium whitespace-nowrap transition sm:py-2',
                 tab === t.id
                   ? 'bg-surface-2 text-fg'
                   : 'text-muted hover:bg-surface hover:text-fg',
@@ -144,7 +144,7 @@ export function SettingsModal() {
         </nav>
 
         {/* body */}
-        <div className="scroll-thin max-h-[62vh] flex-1 overflow-y-auto p-5">
+        <div className="scroll-thin max-h-[62dvh] flex-1 overflow-y-auto p-5">
           {tab === 'connection' && (
             <div className="space-y-5">
               <Section
@@ -191,12 +191,14 @@ export function SettingsModal() {
                       value={settings.apiKey}
                       onChange={(e) => updateSettings({ apiKey: e.target.value })}
                       placeholder={activePreset?.keyHint ?? 'your key'}
-                      className="field pr-9 font-mono text-xs"
+                      className="field pr-12 font-mono text-xs sm:pr-9"
                       spellCheck={false}
                     />
                     <button
                       onClick={() => setShowKey((v) => !v)}
-                      className="absolute top-1/2 right-2 -translate-y-1/2 text-faint hover:text-fg"
+                      className="absolute top-1/2 right-0.5 grid size-11 -translate-y-1/2 place-items-center rounded-lg text-faint hover:text-fg sm:right-2 sm:size-8"
+                      aria-label={showKey ? 'Hide API key' : 'Show API key'}
+                      title={showKey ? 'Hide key' : 'Show key'}
                     >
                       {showKey ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
@@ -282,7 +284,7 @@ export function SettingsModal() {
                       key={m}
                       onClick={() => updateSettings({ model: m })}
                       className={cn(
-                        'flex w-full items-center gap-2 border-b border-border/60 px-3 py-2 text-left font-mono text-xs transition last:border-0 hover:bg-surface-2',
+                        'flex w-full items-center gap-2 border-b border-border/60 px-3 py-3 text-left font-mono text-xs transition last:border-0 hover:bg-surface-2 sm:py-2',
                         settings.model === m && 'bg-surface-2 text-accent',
                       )}
                     >

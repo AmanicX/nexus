@@ -1,7 +1,7 @@
 {
   "name": "nexus",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Nexus — a multi-theme, memory-aware AI character chat studio for any OpenAI-compatible provider (Groq, OpenRouter, Ollama, LM Studio).",
   "author": "Nexus",
   "license": "MIT",
@@ -11,10 +11,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:electron": "tsc -b && vite build --base=./",
+    "build:web": "tsc -b && vite build --base=./",
     "electron:dev": "node scripts/dev-electron.mjs",
     "dist": "npm run build:electron && electron-builder",
     "pack:win": "npm run build:electron && electron-builder --win",
     "pack:linux": "npm run build:electron && electron-builder --linux",
+    "cap:sync": "npm run build:web && cap sync android",
+    "cap:open": "cap open android",
+    "android:apk": "npm run cap:sync && cd android && gradlew assembleDebug",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -54,6 +58,8 @@
     }
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
     "clsx": "^2.1.1",
     "lucide-react": "^1.57.0",
     "motion": "^14.2.0",
@@ -63,6 +69,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",

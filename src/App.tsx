@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Menu, Terminal } from 'lucide-react'
 import { useStore } from '@/store/useStore'
+import type { ThemeId } from '@/types'
 import { Sidebar } from '@/components/Sidebar'
 import { ChatView } from '@/components/ChatView'
 import { EmptyState } from '@/components/EmptyState'
@@ -9,6 +10,13 @@ import { CharacterModal } from '@/components/CharacterModal'
 import { WorldModal } from '@/components/WorldModal'
 import { CommandCheatsheet } from '@/components/CommandCheatsheet'
 import { Modal } from '@/components/Modal'
+
+/** Matches --c-bg in index.css, so the mobile status bar follows the theme. */
+const THEME_COLORS: Record<ThemeId, string> = {
+  chatbot: '#000000',
+  anime: '#060310',
+  world: '#03100a',
+}
 
 function App() {
   const theme = useStore((s) => s.settings.theme)
@@ -20,6 +28,8 @@ function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
+    const color = THEME_COLORS[theme] ?? '#000000'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
   }, [theme])
 
   return (
@@ -31,13 +41,13 @@ function App() {
           <ChatView onShowCommands={() => setShowCommands(true)} />
         ) : (
           <div className="flex h-full min-w-0 flex-1 flex-col">
-            <header className="hairline material flex items-center gap-2 px-3 py-2.5 lg:hidden">
+            <header className="hairline material pad-top flex items-center gap-2 px-2 py-2.5 lg:hidden">
               <button
                 onClick={() => setUI({ sidebarOpen: true })}
-                className="btn btn-ghost size-9 rounded-full p-0"
+                className="btn btn-ghost grid size-11 place-items-center rounded-full p-0"
                 aria-label="Open sidebar"
               >
-                <Menu size={18} />
+                <Menu size={20} />
               </button>
               <span className="font-display text-body font-semibold">Nexus</span>
             </header>

@@ -250,11 +250,17 @@ export function CharacterModal() {
                 ring
               />
               <div className="flex gap-1.5">
-                <button onClick={() => fileRef.current?.click()} className="btn px-2.5 py-1.5 text-xs">
+                <button
+                  onClick={() => fileRef.current?.click()}
+                  className="btn px-3 py-2.5 text-xs sm:px-2.5 sm:py-1.5"
+                >
                   <Upload size={13} /> Image
                 </button>
                 {form.avatar && (
-                  <button onClick={() => set({ avatar: '' })} className="btn px-2.5 py-1.5 text-xs">
+                  <button
+                    onClick={() => set({ avatar: '' })}
+                    className="btn px-3 py-2.5 text-xs sm:px-2.5 sm:py-1.5"
+                  >
                     <X size={13} /> Clear
                   </button>
                 )}
@@ -326,7 +332,7 @@ export function CharacterModal() {
                   key={e}
                   onClick={() => set({ avatar: e })}
                   className={cn(
-                    'flex size-8 items-center justify-center rounded-lg border text-base transition',
+                    'flex size-10 items-center justify-center rounded-lg border text-base transition sm:size-8',
                     form.avatar === e
                       ? 'border-accent bg-surface-2'
                       : 'border-border bg-surface hover:border-border-strong',
@@ -343,10 +349,11 @@ export function CharacterModal() {
                   key={c}
                   onClick={() => set({ avatarColor: c })}
                   className={cn(
-                    'size-6 rounded-full border-2 transition',
+                    'size-9 rounded-full border-2 transition sm:size-6',
                     form.avatarColor === c ? 'border-fg scale-110' : 'border-transparent',
                   )}
                   style={{ background: c }}
+                  aria-label={`Colour ${c}`}
                 />
               ))}
               <label className="ml-1 flex items-center gap-1 text-2xs text-faint">
@@ -468,7 +475,7 @@ export function CharacterModal() {
                     ],
                   })
                 }
-                className="btn px-2.5 py-1 text-xs"
+                className="btn flex items-center gap-1 px-3 py-2.5 text-xs sm:px-2.5 sm:py-1"
               >
                 <Plus size={13} /> Add
               </button>
@@ -486,7 +493,7 @@ export function CharacterModal() {
                       })
                     }
                     placeholder="Trait"
-                    className="field w-32 shrink-0 py-1.5 text-xs"
+                    className="field w-24 shrink-0 py-1.5 text-xs sm:w-32"
                   />
                   <input
                     value={m.value}
@@ -502,7 +509,9 @@ export function CharacterModal() {
                   />
                   <button
                     onClick={() => set({ metadata: form.metadata.filter((_, j) => j !== i) })}
-                    className="btn size-9 shrink-0 rounded-xl p-0 text-faint hover:text-danger"
+                    className="btn grid size-10 shrink-0 place-items-center rounded-xl p-0 text-faint hover:text-danger"
+                    aria-label="Remove attribute"
+                    title="Remove"
                   >
                     <X size={14} />
                   </button>
@@ -723,7 +732,7 @@ function Card({
           )}
         </div>
         {subtitle && <p className="mt-0.5 line-clamp-2 text-2xs text-muted">{subtitle}</p>}
-        <div className="mt-1.5 flex items-center gap-2">
+        <div className="card-actions mt-1.5 flex items-center gap-2">
           {actions}
           {tags && tags.length > 0 && (
             <span className="ml-auto truncate text-2xs text-faint">{tags.join(' · ')}</span>

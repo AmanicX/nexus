@@ -229,7 +229,7 @@ export function WorldModal() {
                     key={e}
                     onClick={() => set({ avatar: e })}
                     className={cn(
-                      'flex size-7 items-center justify-center rounded-lg border text-sm transition',
+                      'flex size-10 items-center justify-center rounded-lg border text-sm transition sm:size-7',
                       form.avatar === e
                         ? 'border-accent bg-surface-2'
                         : 'border-border bg-surface hover:border-border-strong',
@@ -277,17 +277,18 @@ export function WorldModal() {
                       key={c}
                       onClick={() => set({ color: c, avatarColor: c })}
                       className={cn(
-                        'size-6 rounded-full border-2 transition',
+                        'size-9 rounded-full border-2 transition sm:size-6',
                         form.color === c ? 'border-fg scale-110' : 'border-transparent',
                       )}
                       style={{ background: c }}
+                      aria-label={`Colour ${c}`}
                     />
                   ))}
                   <input
                     type="color"
                     value={form.color}
                     onChange={(e) => set({ color: e.target.value, avatarColor: e.target.value })}
-                    className="h-6 w-8 cursor-pointer rounded border border-border bg-transparent"
+                    className="h-9 w-11 cursor-pointer rounded border border-border bg-transparent sm:h-6 sm:w-8"
                   />
                 </div>
               </Labelled>
@@ -407,7 +408,7 @@ export function WorldModal() {
                 </div>
                 <button
                   onClick={() => openCharacter()}
-                  className="btn btn-accent px-3 py-1.5 text-xs"
+                  className="btn btn-accent shrink-0 px-3 py-2.5 text-xs sm:py-1.5"
                 >
                   <Plus size={14} /> Add
                 </button>
@@ -439,7 +440,7 @@ export function WorldModal() {
                         <p className="mt-0.5 line-clamp-2 text-2xs text-muted">
                           {c.tagline || c.description.slice(0, 70)}
                         </p>
-                        <div className="mt-1.5 flex items-center gap-3">
+                        <div className="card-actions mt-1.5 flex items-center gap-3">
                           <button
                             onClick={() => focus(c.id, activeWorld.id)}
                             className="text-xs font-semibold text-accent hover:underline"
@@ -457,6 +458,7 @@ export function WorldModal() {
                               if (confirm(`Remove ${c.name} from the cast?`)) deleteCharacter(c.id)
                             }}
                             className="ml-auto text-xs text-faint hover:text-danger"
+                            aria-label={`Remove ${c.name}`}
                           >
                             <Trash2 size={13} />
                           </button>

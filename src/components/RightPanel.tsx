@@ -38,13 +38,17 @@ export function RightPanel({
   return (
     <>
       <button className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={onClose} />
-      <aside className="fixed inset-y-0 right-0 z-40 flex w-[88%] max-w-sm flex-col border-l border-border bg-bg-2/95 backdrop-blur-xl lg:static lg:z-auto lg:w-80 lg:bg-transparent lg:backdrop-blur-none">
+      <aside className="pad-top safe-right fixed inset-y-0 right-0 z-40 flex w-[88%] max-w-sm flex-col border-l border-border bg-bg-2/95 backdrop-blur-xl lg:static lg:z-auto lg:w-80 lg:bg-transparent lg:backdrop-blur-none">
         <div className="hairline flex items-center justify-between px-4 py-3">
           <h3 className="flex items-center gap-2 font-display text-sm font-semibold">
             {conversation.worldId ? <Heart size={15} /> : <Brain size={15} />}
             {conversation.worldId ? 'World state' : 'Memory'}
           </h3>
-          <button onClick={onClose} className="btn btn-ghost size-8 rounded-lg p-0">
+          <button
+            onClick={onClose}
+            className="btn btn-ghost grid size-10 shrink-0 place-items-center rounded-lg p-0"
+            aria-label="Close panel"
+          >
             <X size={16} />
           </button>
         </div>
@@ -102,13 +106,15 @@ export function RightPanel({
                     }}
                   />
                   <button
-                    className="btn shrink-0 px-3 py-1.5"
+                    className="btn grid size-10 shrink-0 place-items-center p-0"
                     onClick={() => {
                       if (newNpc.trim()) {
                         setRep(newNpc.trim(), 0)
                         setNewNpc('')
                       }
                     }}
+                    title="Add character"
+                    aria-label="Add character"
                   >
                     <Plus size={15} />
                   </button>

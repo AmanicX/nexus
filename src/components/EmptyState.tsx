@@ -61,7 +61,7 @@ export function EmptyState() {
         </ul>
 
         <div className="mt-6 flex flex-col justify-center gap-2 sm:flex-row">
-          <button onClick={openCreate} className="btn btn-accent px-5 py-2.5">
+          <button onClick={openCreate} className="btn btn-accent px-5 py-3 sm:py-2.5">
             {theme === 'world' ? <Globe2 size={17} /> : <Plus size={17} />}
             {theme === 'world'
               ? worlds.length
@@ -70,7 +70,7 @@ export function EmptyState() {
               : 'Create a character'}
           </button>
           {(themed.length > 0 || (theme === 'world' && worlds.length > 0)) && (
-            <button onClick={openBrowse} className="btn px-5 py-2.5">
+            <button onClick={openBrowse} className="btn px-5 py-3 sm:py-2.5">
               <Users size={16} />
               {theme === 'world' ? 'Browse the cast' : 'Browse existing'}
             </button>

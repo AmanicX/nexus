@@ -62,15 +62,15 @@ export function Composer({
   }
 
   return (
-    <div className="material hairline-top px-3 pt-2 pb-3 sm:px-5 sm:pb-4">
+    <div className="material hairline-top pad-bottom px-3 pt-2 pb-3 sm:px-5 sm:pb-4">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+        <div className="scrollbar-none mb-2 -mx-3 flex items-center gap-1.5 overflow-x-auto px-3 sm:mx-0 sm:flex-wrap sm:px-0">
           {SNIPPETS.map((s) => (
             <button
               key={s.label}
               onClick={() => insert(s.left, s.right)}
               title={s.title}
-              className="chip font-mono text-2xs"
+              className="chip shrink-0 font-mono text-2xs"
             >
               {s.label}
             </button>
@@ -78,7 +78,7 @@ export function Composer({
           <button
             onClick={onShowHelp}
             title="Command reference"
-            className="chip ml-auto gap-1 text-2xs"
+            className="chip ml-auto shrink-0 gap-1 text-2xs"
           >
             <HelpCircle size={12} /> Commands
           </button>
@@ -92,6 +92,9 @@ export function Composer({
               onChange={(e) => onChange(e.target.value)}
               onKeyDown={handleKey}
               rows={1}
+              enterKeyHint="send"
+              autoCapitalize="sentences"
+              autoCorrect="on"
               placeholder={
                 characterName
                   ? `Message ${characterName}…  (thoughts) "actions" <god> [world]`
@@ -103,7 +106,7 @@ export function Composer({
           {streaming ? (
             <button
               onClick={onStop}
-              className="btn btn-accent size-9 shrink-0 rounded-full p-0"
+              className="btn btn-accent size-11 shrink-0 rounded-full p-0 sm:size-9"
               title="Stop generating"
             >
               <Square size={15} fill="currentColor" />
@@ -112,7 +115,7 @@ export function Composer({
             <button
               onClick={onSend}
               disabled={disabled || !value.trim()}
-              className="btn btn-accent size-9 shrink-0 rounded-full p-0"
+              className="btn btn-accent size-11 shrink-0 rounded-full p-0 sm:size-9"
               title="Send"
             >
               <ArrowUp size={19} strokeWidth={2.6} />
@@ -121,7 +124,8 @@ export function Composer({
         </div>
         <div className="mt-1.5 flex items-center justify-between px-1.5 text-2xs text-faint">
           <span className="flex items-center gap-1">
-            <Zap size={11} /> Enter to send · Shift+Enter for a new line
+            <Zap size={11} /> Enter to send
+            <span className="hidden sm:inline">· Shift+Enter for a new line</span>
           </span>
           <span className="hidden font-mono sm:inline">( ) " " (:N) &lt; &gt; [ ]</span>
         </div>

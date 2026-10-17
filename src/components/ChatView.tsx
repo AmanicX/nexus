@@ -216,13 +216,13 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
   return (
     <div className="flex h-full min-w-0 flex-1 flex-col">
       {/* header */}
-      <header className="hairline material flex items-center gap-3 px-3 py-2.5 sm:px-4">
+      <header className="hairline material pad-top flex items-center gap-2 px-2 py-2.5 sm:gap-3 sm:px-4">
         <button
           onClick={() => setUI({ sidebarOpen: true })}
-          className="btn btn-ghost size-9 shrink-0 rounded-full p-0 lg:hidden"
+          className="btn btn-ghost grid size-11 shrink-0 place-items-center rounded-full p-0 lg:hidden"
           aria-label="Open sidebar"
         >
-          <Menu size={18} />
+          <Menu size={20} />
         </button>
 
         <Avatar
@@ -231,6 +231,7 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
           color={character?.avatarColor}
           size={40}
           ring
+          className="hidden sm:inline-flex"
         />
         <div className="min-w-0 flex-1">
           {renaming ? (
@@ -260,7 +261,10 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
 
         <button
           onClick={() => setUI({ rightPanel: rightPanel === 'memory' ? 'none' : 'memory' })}
-          className={cn('btn btn-ghost size-9 rounded-full p-0', rightPanel === 'memory' && 'bg-surface-2')}
+          className={cn(
+            'btn btn-ghost size-10 shrink-0 rounded-full p-0 sm:size-9',
+            rightPanel === 'memory' && 'bg-surface-2',
+          )}
           title="Memory"
         >
           <Brain size={17} />
@@ -268,17 +272,20 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
         {world && (
           <button
             onClick={() => setUI({ rightPanel: rightPanel === 'reputation' ? 'none' : 'reputation' })}
-            className={cn('btn btn-ghost size-9 rounded-full p-0', rightPanel === 'reputation' && 'bg-surface-2')}
+            className={cn(
+              'btn btn-ghost size-10 shrink-0 rounded-full p-0 sm:size-9',
+              rightPanel === 'reputation' && 'bg-surface-2',
+            )}
             title="Reputation"
           >
             <Users size={17} />
           </button>
         )}
 
-        <div className="relative">
+        <div className="relative shrink-0">
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="btn btn-ghost size-9 rounded-full p-0"
+            className="btn btn-ghost size-10 rounded-full p-0 sm:size-9"
             title="More"
           >
             <MoreVertical size={17} />
@@ -286,7 +293,7 @@ export function ChatView({ onShowCommands }: { onShowCommands: () => void }) {
           {menuOpen && (
             <>
               <div className="fixed inset-0 z-20" onClick={() => setMenuOpen(false)} />
-              <div className="panel anim-pop absolute right-0 z-30 mt-1 w-52 overflow-hidden rounded-2xl p-1.5 shadow-2xl">
+              <div className="panel anim-pop scroll-thin absolute right-0 z-30 mt-1 max-h-[70dvh] w-52 overflow-y-auto rounded-2xl p-1.5 shadow-2xl">
                 <MenuItem
                   icon={<Pencil size={15} />}
                   onClick={() => {
@@ -433,7 +440,7 @@ function MenuItem({
     <button
       onClick={onClick}
       className={cn(
-        'flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm transition hover:bg-surface-2',
+        'flex w-full items-center gap-2.5 rounded-xl px-3 py-3 text-left text-sm transition hover:bg-surface-2 sm:py-2',
         danger && 'text-danger hover:bg-danger/10',
       )}
     >

@@ -38,15 +38,17 @@ export function MessageBubble({
         <div className="bubble-user max-w-[85%] rounded-3xl rounded-br-lg px-4 py-2.5 text-body leading-relaxed [overflow-wrap:anywhere] sm:max-w-[75%]">
           <RawText text={message.raw ?? message.content} />
         </div>
-        <div className="flex items-center gap-2 pr-1 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
-          <span className="text-2xs text-faint">{formatTime(message.timestamp)}</span>
+        {/* Always reachable on touch; hover-revealed only where hover is real. */}
+        <div className="flex items-center gap-1 pr-1 opacity-100 transition pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100 pointer-fine:group-focus-within:opacity-100 sm:gap-2">
+          <span className="px-1 text-2xs text-faint">{formatTime(message.timestamp)}</span>
           {onDelete && (
             <button
               onClick={onDelete}
-              className="text-faint transition hover:text-danger"
+              className="grid size-9 place-items-center rounded-full text-faint transition hover:text-danger sm:size-7"
+              aria-label="Delete message"
               title="Delete message"
             >
-              <Trash2 size={13} />
+              <Trash2 size={14} />
             </button>
           )}
         </div>
@@ -84,31 +86,34 @@ export function MessageBubble({
             <MarkdownText text={message.content} className={streaming ? 'caret' : undefined} />
           )}
         </div>
-        <div className="mt-1 flex items-center gap-3 pl-1 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
-          <span className="text-2xs text-faint">{formatTime(message.timestamp)}</span>
+        <div className="mt-1 flex items-center gap-1 pl-1 opacity-100 transition pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100 pointer-fine:group-focus-within:opacity-100 sm:gap-3">
+          <span className="px-1 text-2xs text-faint">{formatTime(message.timestamp)}</span>
           <button
             onClick={handleCopy}
-            className="text-faint transition hover:text-fg"
+            className="grid size-9 place-items-center rounded-full text-faint transition hover:text-fg sm:size-7"
+            aria-label="Copy message"
             title="Copy"
           >
-            {copied ? <Check size={13} /> : <Copy size={13} />}
+            {copied ? <Check size={14} /> : <Copy size={14} />}
           </button>
           {canRegenerate && onRegenerate && (
             <button
               onClick={onRegenerate}
-              className="text-faint transition hover:text-fg"
+              className="grid size-9 place-items-center rounded-full text-faint transition hover:text-fg sm:size-7"
+              aria-label="Regenerate reply"
               title="Regenerate"
             >
-              <RotateCcw size={13} />
+              <RotateCcw size={14} />
             </button>
           )}
           {onDelete && (
             <button
               onClick={onDelete}
-              className="text-faint transition hover:text-danger"
+              className="grid size-9 place-items-center rounded-full text-faint transition hover:text-danger sm:size-7"
+              aria-label="Delete message"
               title="Delete"
             >
-              <Trash2 size={13} />
+              <Trash2 size={14} />
             </button>
           )}
         </div>

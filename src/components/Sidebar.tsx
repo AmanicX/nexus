@@ -81,12 +81,12 @@ export function Sidebar() {
       )}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 flex w-[86%] max-w-xs flex-col border-r border-border bg-bg-2/95 backdrop-blur-xl transition-transform duration-300 lg:static lg:z-auto lg:w-72 lg:translate-x-0 lg:bg-transparent lg:backdrop-blur-none',
+          'safe-left fixed inset-y-0 left-0 z-40 flex w-[86%] max-w-xs flex-col border-r border-border bg-bg-2/95 backdrop-blur-xl transition-transform duration-300 lg:static lg:z-auto lg:w-72 lg:translate-x-0 lg:bg-transparent lg:backdrop-blur-none',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
         {/* brand */}
-        <div className="flex items-center gap-2.5 px-4 pt-4 pb-3">
+        <div className="pad-top flex items-center gap-2.5 px-4 pt-4 pb-3">
           <span className="flex size-9 items-center justify-center rounded-[27%] bg-accent-grad text-accent-fg shadow-lg">
             <span className="font-display text-base font-bold">N</span>
           </span>
@@ -97,8 +97,9 @@ export function Sidebar() {
             <p className="mt-0.5 truncate text-2xs text-faint">{meta.tagline}</p>
           </div>
           <button
-            className="btn btn-ghost size-8 rounded-lg p-0 lg:hidden"
+            className="btn btn-ghost grid size-10 place-items-center rounded-lg p-0 lg:hidden"
             onClick={() => setUI({ sidebarOpen: false })}
+            aria-label="Close sidebar"
           >
             <X size={16} />
           </button>
@@ -144,7 +145,7 @@ export function Sidebar() {
                           setActiveWorld(w.id)
                           setWorldPicker(false)
                         }}
-                        className="flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-surface-2"
+                        className="flex w-full items-center gap-2 rounded-xl px-2 py-2.5 text-left text-sm hover:bg-surface-2 sm:py-1.5"
                       >
                         <span
                           className="size-2.5 rounded-full"
@@ -191,8 +192,9 @@ export function Sidebar() {
           </div>
           <button
             onClick={() => setOnlyPinned((v) => !v)}
-            className={cn('btn size-9 rounded-xl p-0', onlyPinned && 'btn-accent')}
+            className={cn('btn size-10 shrink-0 rounded-xl p-0 sm:size-9', onlyPinned && 'btn-accent')}
             title="Pinned only"
+            aria-label="Show pinned only"
           >
             <Pin size={15} />
           </button>
@@ -248,14 +250,15 @@ export function Sidebar() {
                 <span className="shrink-0 text-2xs text-faint opacity-0 transition group-hover:opacity-100">
                   {timeAgo(c.updatedAt)}
                 </span>
-                <div className="absolute top-1 right-1 hidden gap-0.5 group-hover:flex">
+                <div className="row-actions">
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       togglePin(c.id)
                     }}
-                    className="flex size-6 items-center justify-center rounded-lg bg-bg-2/80 text-faint hover:text-accent"
+                    className="bg-bg-2/80 text-faint hover:text-accent"
                     title="Pin"
+                    aria-label={c.pinned ? 'Unpin chat' : 'Pin chat'}
                   >
                     <Pin size={12} />
                   </button>
@@ -264,8 +267,9 @@ export function Sidebar() {
                       e.stopPropagation()
                       deleteConversation(c.id)
                     }}
-                    className="flex size-6 items-center justify-center rounded-lg bg-bg-2/80 text-faint hover:text-danger"
+                    className="bg-bg-2/80 text-faint hover:text-danger"
                     title="Delete"
+                    aria-label="Delete chat"
                   >
                     <Trash2 size={12} />
                   </button>
@@ -276,7 +280,7 @@ export function Sidebar() {
         </div>
 
         {/* footer */}
-        <div className="hairline flex items-center gap-2 px-3 py-3">
+        <div className="hairline pad-bottom flex items-center gap-2 px-3 py-3">
           <button
             onClick={() => setUI({ settingsOpen: true })}
             className="btn flex-1 justify-start rounded-xl"
@@ -293,8 +297,9 @@ export function Sidebar() {
           </button>
           <button
             onClick={() => setUI({ settingsOpen: true, settingsTab: 'themes', rightPanel: 'none' })}
-            className="btn size-9 rounded-xl p-0"
+            className="btn size-10 shrink-0 rounded-xl p-0 sm:size-9"
             title="About this theme"
+            aria-label="About this theme"
           >
             <Info size={16} />
           </button>

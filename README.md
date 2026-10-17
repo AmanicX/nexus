@@ -2,9 +2,9 @@
 
 # Nexus
 
-**A multi-theme, memory-aware AI character chat studio for the desktop.**
+**A multi-theme, memory-aware AI character chat studio for desktop, web and Android.**
 
-Bring your own model — [Groq](https://console.groq.com/keys), OpenRouter, OpenAI, or a **local** model via Ollama/LM Studio · craft characters & worlds · chat with rich role-play controls · packaged natively for **Windows** and **Linux**.
+Bring your own model — [Groq](https://console.groq.com/keys), OpenRouter, OpenAI, or a **local** model via Ollama/LM Studio · craft characters & worlds · chat with rich role-play controls · packaged natively for **Windows** and **Linux**, installable as a **web app (PWA)**, with an **Android** project in the repo.
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-4c9aff)
@@ -27,9 +27,9 @@ The app ships with **three distinct modes**, each with its own look and behaviou
 
 **Privacy and control come first.** Nexus runs natively on your machine and its interface works fully offline. It only contacts the AI provider *you* choose — there is no account, no telemetry, and no bundled API key. Use a hosted provider (**Groq**, **OpenRouter**, **OpenAI**) or a fully local model via **Ollama** / **LM Studio** on your own hardware.
 
-Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**, speaking the standard **OpenAI-compatible API** with any endpoint you point it at. The result is a fast, native-feeling desktop app with streaming replies, three hand-tuned themes, and a full character/world creator.
+Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**, speaking the standard **OpenAI-compatible API** with any endpoint you point it at. The result is a fast, native-feeling desktop app with streaming replies, three hand-tuned themes, and a full character/world creator. The same UI is also published as an installable **web app (PWA)** at [amanicx.github.io/nexus/app](https://amanicx.github.io/nexus/app/) and ships with an **Android** project for building an APK.
 
-> **Installing is easy and needs no technical skills:** on Windows, download the `.exe`; on Linux, clone this repo and run one script. No Node.js, no npm, no compiling.
+> **Installing is easy and needs no technical skills:** on Windows, download the `.exe`; on Linux, clone this repo and run one script; on a phone or tablet, open the web app in your browser and tap **Install**. No Node.js, no npm, no compiling.
 
 ---
 
@@ -43,6 +43,8 @@ Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**
     - [Recommended: the install script](#recommended--the-install-script)
     - [Alternative: download a package directly](#alternative--download-a-package-directly)
     - [Uninstalling](#uninstalling)
+  - [Web app (install as an app)](#web-app-install-as-an-app)
+  - [Android (build the APK)](#android-build-the-apk)
 - [Connect a model (first run)](#connect-a-model-first-run)
 - [Command reference](#command-reference)
 - [Troubleshooting](#troubleshooting)
@@ -62,6 +64,7 @@ Under the hood it is a **React + TypeScript + Vite** app wrapped in **Electron**
 - **Uncensored by default** — the system prompt allows mature, unfiltered role-play and **you choose the model**. Point Nexus at hosted models or a local, unfiltered one. You are responsible for what you generate.
 - **Any provider, any model** — works with any OpenAI-compatible API: **Groq**, **OpenRouter**, **OpenAI**, or fully local models via **Ollama** and **LM Studio**. Fetch and search the provider's live model list, or type any model id.
 - **Offline-capable** — with a local model (Ollama/LM Studio) the app works entirely offline. No accounts, no telemetry, no bundled keys.
+- **Everywhere** — one codebase, four ways to run it: a Windows `.exe`, Linux packages (+ AppImage), an installable **web app (PWA)**, and an **Android APK** built from the Capacitor project in this repo.
 
 ---
 
@@ -135,6 +138,67 @@ chmod +x Nexus-<version>.AppImage && ./Nexus-<version>.AppImage
 | RPM package | `sudo dnf remove nexus` (or `sudo zypper remove nexus`) |
 | Pacman package | `sudo pacman -R nexus` |
 | AppImage | delete the `.AppImage` (and `~/.local/bin/nexus` if you used the script) |
+
+### Web app (install as an app)
+
+Nexus also runs in the browser, served from this repository's GitHub Pages site: **<https://amanicx.github.io/nexus/app/>**
+
+1. Open that link on your phone, tablet or computer.
+2. In **Settings → Connection**, enter your provider and key as usual — it is the same app as the desktop build.
+3. **Install it** so it opens like a native app:
+   - **Android / Chrome** — menu (⋮) → **Add to Home screen** → **Install**.
+   - **iPhone / iPad / Safari** — Share sheet → **Add to Home Screen**.
+   - **Desktop Chrome / Edge** — install icon at the right of the address bar.
+   - **Firefox** — menu → **Install Site**.
+
+It is a full **PWA**: an app icon, full-screen standalone window, offline app shell (cached by a service worker), safe-area handling for notches, and a chat layout tuned for touch. Settings, characters, worlds and chats persist in your browser's storage on that device.
+
+The web app and the desktop app store their data **separately** — installing one does not migrate the other.
+
+### Android (build the APK)
+
+The repository ships a full **Capacitor** Android project under [`android/`](android/) (app id `com.nexus.chatstudio`, name **Nexus**), using the same web build as the browser app. To produce an installable `.apk` you need a machine with the Android toolchain — end users should just sideload the built file.
+
+**1. Install the prerequisites**
+
+- **JDK 17** (Temurin or OpenJDK 17). Set `JAVA_HOME` to it.
+- **Android SDK** with **Platform 35** and **Build-Tools** (easiest via [Android Studio](https://developer.android.com/studio) → SDK Manager), or the standalone command-line tools.
+
+On Windows, set the SDK path so Gradle can find it — create `android/local.properties` (it is gitignored):
+
+```properties
+sdk.dir=C\:\\Users\\<you>\\AppData\\Local\\Android\\Sdk
+```
+
+On macOS/Linux the same file takes a plain path (`sdk.dir=/home/<you>/Android/Sdk`), or you can export `ANDROID_HOME` instead.
+
+**2. Build the web assets and sync them into the project**
+
+```bash
+npm install
+npm run cap:sync        # = npm run build:web && npx cap sync android
+```
+
+**3. Build the APK**
+
+```bash
+cd android
+./gradlew assembleDebug        # Windows: gradlew.bat assembleDebug
+```
+
+The debug APK lands at `android/app/build/outputs/apk/debug/app-debug.apk`. For a release build, create a keystore and run `./gradlew assembleRelease` after setting `signingConfigs` in `android/app/build.gradle`.
+
+**4. Install it**
+
+```bash
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+…or copy the `.apk` to the phone and open it (enable **Install unknown apps** for your file manager first).
+
+> **Why `allowMixedContent` is on:** the Android manifest allows cleartext HTTP so the app can reach a **local model on your LAN** (e.g. Ollama or LM Studio running on a PC at `http://192.168.x.x:11434/v1`). Hosted providers are still contacted over HTTPS.
+
+To open the project in **Android Studio** instead of the CLI: `npm run cap:open`.
 
 ---
 
@@ -222,9 +286,14 @@ npm run lint           # lint
 npm run dist           # build + package for the CURRENT OS
 npm run pack:win       # Windows: NSIS installer  -> release/Nexus Setup <version>.exe
 npm run pack:linux     # Linux: AppImage, deb, rpm, pacman -> release/
+
+npm run build:web      # web build with relative base (what the PWA and Android use)
+npm run cap:sync       # build:web + copy into android/app/src/main/assets/public
+npm run cap:open       # open the Android project in Android Studio
+npm run android:apk    # cap:sync + ./gradlew assembleDebug (needs JDK 17 + Android SDK)
 ```
 
-Linux packages must be built on Linux (or via CI) — `electron-builder` does not cross-build them from Windows.
+Linux packages must be built on Linux (or via CI) — `electron-builder` does not cross-build them from Windows. Building the Android APK needs the toolchain described in [Android (build the APK)](#android-build-the-apk).
 
 ---
 
@@ -253,9 +322,12 @@ src/
   data/           Built-in characters, worlds, avatars, backdrops
   lib/            OpenAI-compatible client (any provider), prompt builder, memory
   store/          Zustand store (persisted settings & conversations)
-  index.css       Design tokens + the three themes
-public/           Static assets (avatars, backdrops, favicon)
-build/            App icon used by electron-builder
+  index.css       Design tokens + the three themes + mobile/PWA rules
+public/           Static assets (avatars, backdrops, favicon, manifest, sw.js, icons)
+android/          Capacitor Android project (build the APK here)
+capacitor.config.ts  Capacitor config (app id com.nexus.chatstudio, webDir dist)
+build/            App icon used by electron-builder and as the PWA/Android source icon
+docs/             GitHub Pages site: landing page, releases page, and the built web app (docs/app/)
 ```
 
 ---
