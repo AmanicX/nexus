@@ -32,6 +32,7 @@ export interface UIState {
   sidebarOpen: boolean
   memoryOpen: boolean
   rightPanel: 'none' | 'reputation' | 'memory'
+  welcomeOpen: boolean
 }
 
 interface State {
@@ -88,7 +89,7 @@ interface State {
 export const DEFAULT_SETTINGS: Settings = {
   apiKey: '',
   baseUrl: DEFAULT_BASE_URL,
-  model: 'llama-3.3-70b-versatile',
+  model: 'openai/gpt-oss-20b',
   cachedModels: [],
   temperature: 0.85,
   maxTokens: 2048,
@@ -100,6 +101,7 @@ export const DEFAULT_SETTINGS: Settings = {
   memoryEnabled: true,
   showThoughts: true,
   bubbleStyle: 'bubbles',
+  onboarded: false,
 }
 
 const defaultUI: UIState = {
@@ -110,6 +112,7 @@ const defaultUI: UIState = {
   sidebarOpen: false,
   memoryOpen: false,
   rightPanel: 'none',
+  welcomeOpen: false,
 }
 
 function emptyWorldState(npc?: string): WorldState {
@@ -445,7 +448,7 @@ export const useStore = create<State>()(
     }),
     {
       name: 'nexus-chat-store',
-      version: 5,
+      version: 6,
       migrate: (persisted: any) => {
         if (persisted?.settings?.globalSystemPrompt === PREVIOUS_DEFAULT_GLOBAL_PROMPT) {
           persisted.settings.globalSystemPrompt = DEFAULT_GLOBAL_PROMPT
@@ -453,11 +456,22 @@ export const useStore = create<State>()(
         if (persisted?.settings?.model === 'openai/gpt-oss-safeguard-20b') {
           persisted.settings.model = DEFAULT_SETTINGS.model
         }
+        // Llama is no longer offered, so anyone sitting on one moves to the default.
+        if (persisted?.settings && /llama/i.test(String(persisted.settings.model ?? ''))) {
+          persisted.settings.model = DEFAULT_SETTINGS.model
+        }
         if (persisted?.settings && !persisted.settings.baseUrl) {
           persisted.settings.baseUrl = DEFAULT_BASE_URL
         }
         if (persisted?.settings && !Array.isArray(persisted.settings.cachedModels)) {
           persisted.settings.cachedModels = []
+        }
+        // Only a genuinely fresh install should see the welcome tour.
+        if (persisted?.settings && persisted.settings.onboarded === undefined) {
+          persisted.settings.onboarded =
+            (persisted.characters?.length ?? 0) > 0 ||
+            (persisted.conversations?.length ?? 0) > 0 ||
+            !!(persisted.settings.apiKey ?? '').trim()
         }
         if (persisted?.settings) persisted.settings.apiKey = ''
         // Characters are adults only (18+). Clamp anything saved as a minor.

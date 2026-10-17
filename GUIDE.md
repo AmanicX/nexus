@@ -118,7 +118,13 @@ There's no ready-made APK in the releases yet. Build one with
 [Part 6](#6-build-the-android-apk), then copy the `.apk` to the phone and open
 it (enable *Install unknown apps* for your file manager first).
 
-### First run: connect a model
+### First run: the welcome tour
+
+The first time Nexus opens it walks you through four short steps — what the studio is, connecting a model, picking one, and a quick tour of how it works. You can skip it, and reopen it any time from the **compass button** at the bottom of the sidebar (or **Settings → Data → Show the tutorial again**).
+
+The default model is **GPT-OSS 20B** on Groq, which is free. Paste a Groq key when asked, or choose any other provider.
+
+### Connect a model
 
 **Settings → Connection**, set three things:
 
@@ -130,7 +136,7 @@ For a fully local, uncensored setup:
 
 ```bash
 # install Ollama from https://ollama.com, then:
-ollama pull llama3.2
+ollama pull qwen2.5
 ```
 
 …then in Nexus pick **Provider = Ollama** and press **↻**.

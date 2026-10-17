@@ -11,6 +11,7 @@ import {
   Palette,
   RefreshCw,
   Search,
+  Sparkles,
   Terminal,
   Trash2,
   Upload,
@@ -301,7 +302,7 @@ export function SettingsModal() {
 
                 <p className="text-2xs text-faint">
                   {presetId === 'ollama'
-                    ? 'Ollama: run “ollama serve”, pull a model (e.g. “ollama pull llama3.2”), then press ↻. Local models are fully unfiltered.'
+                    ? 'Ollama: run “ollama serve”, pull a model (e.g. “ollama pull qwen2.5”), then press ↻. Local models are fully unfiltered.'
                     : presetId === 'lmstudio'
                       ? 'LM Studio: start its local server, load a model, then press ↻.'
                       : 'Providers cap tokens per minute. On a rate-limit error, wait a few seconds and retry. ↻ refreshes the list.'}
@@ -462,6 +463,14 @@ export function SettingsModal() {
                   <Stat label="Worlds" value={worlds.length} />
                   <Stat label="Chats" value={conversations.length} />
                 </div>
+              </Section>
+              <Section title="Guide" hint="Reopen the first-run tour whenever you like.">
+                <button
+                  onClick={() => setUI({ settingsOpen: false, welcomeOpen: true })}
+                  className="btn"
+                >
+                  <Sparkles size={15} /> Show the tutorial again
+                </button>
               </Section>
               <Section title="Backup & restore">
                 <div className="flex flex-wrap gap-2">

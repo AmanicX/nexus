@@ -8,6 +8,7 @@ import {
   MessageSquarePlus,
   Globe2,
   Check,
+  Compass,
   X,
   Info,
 } from 'lucide-react'
@@ -294,6 +295,14 @@ export function Sidebar() {
               )}
               title={ready ? 'AI connected' : 'No API key / provider set'}
             />
+          </button>
+          <button
+            onClick={() => setUI({ welcomeOpen: true })}
+            className="btn size-10 shrink-0 rounded-xl p-0 sm:size-9"
+            title="Show the tour"
+            aria-label="Show the tour"
+          >
+            <Compass size={16} />
           </button>
           <button
             onClick={() => setUI({ settingsOpen: true, settingsTab: 'themes', rightPanel: 'none' })}

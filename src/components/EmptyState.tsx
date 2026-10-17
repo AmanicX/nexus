@@ -1,6 +1,7 @@
-import { Globe2, Plus, Sparkles, Users } from 'lucide-react'
+import { Globe2, KeyRound, Plus, Sparkles, Users } from 'lucide-react'
 import { useStore } from '@/store/useStore'
 import { THEMES } from '@/data/themes'
+import { providerNeedsKey } from '@/lib/groq'
 import { publicUrl } from '@/lib/utils'
 import { Avatar } from './Avatar'
 import type { ThemeId } from '@/types'
@@ -18,6 +19,9 @@ export function EmptyState() {
   const worlds = useStore((s) => s.worlds)
   const focus = useStore((s) => s.focusOrCreateConversation)
   const setActiveWorld = useStore((s) => s.setActiveWorld)
+  const apiKey = useStore((s) => s.settings.apiKey)
+  const baseUrl = useStore((s) => s.settings.baseUrl)
+  const connected = apiKey.trim() !== '' || !providerNeedsKey(baseUrl)
 
   const meta = THEMES[theme]
   const themed = characters.filter((c) => c.theme === theme)
@@ -41,6 +45,22 @@ export function EmptyState() {
       />
 
       <div className="anim-pop relative w-full max-w-md text-center">
+        {!connected && (
+          <button
+            onClick={() => setUI({ settingsOpen: true, settingsTab: 'connection' })}
+            className="mx-auto mb-5 flex w-full items-center gap-3 rounded-2xl border border-[#ff9f0a]/40 bg-[#ff9f0a]/10 px-4 py-3 text-left transition hover:border-[#ff9f0a]/70"
+          >
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[#ff9f0a]/20 text-[#ff9f0a]">
+              <KeyRound size={16} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold">No model connected yet</span>
+              <span className="block text-2xs text-muted">
+                Paste a Groq key — or pick another provider — to start chatting.
+              </span>
+            </span>
+          </button>
+        )}
         <div className="mx-auto mb-5 flex size-20 items-center justify-center rounded-[27%] bg-accent-grad text-4xl text-accent-fg shadow-2xl">
           {meta.icon}
         </div>

@@ -9,6 +9,7 @@ import { SettingsModal } from '@/components/SettingsModal'
 import { CharacterModal } from '@/components/CharacterModal'
 import { WorldModal } from '@/components/WorldModal'
 import { CommandCheatsheet } from '@/components/CommandCheatsheet'
+import { Welcome } from '@/components/Welcome'
 import { Modal } from '@/components/Modal'
 
 /** Matches --c-bg in index.css, so the mobile status bar follows the theme. */
@@ -59,6 +60,7 @@ function App() {
       <SettingsModal />
       <CharacterModal />
       <WorldModal />
+      <Welcome />
 
       <Modal
         open={showCommands}

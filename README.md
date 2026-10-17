@@ -226,7 +226,7 @@ Hosted models still carry their own safety training. For the most unfiltered out
 
 ```bash
 # 1. install Ollama from https://ollama.com, then:
-ollama pull llama3.2          # or a freer model, e.g. mistral-nemo / dolphin-mixtral
+ollama pull qwen2.5           # or a freer model, e.g. mistral-nemo / dolphin-mixtral
 ollama serve                  # if it is not already running
 
 # 2. in Nexus → Settings → Connection:

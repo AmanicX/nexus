@@ -68,19 +68,9 @@ export interface GroqChatOptions {
 
 export const GROQ_MODELS: GroqModel[] = [
   {
-    id: 'llama-3.3-70b-versatile',
-    label: 'Llama 3.3 70B',
-    note: 'Groq’s most steerable big model · strong, unfiltered roleplay',
-  },
-  {
-    id: 'llama-3.1-8b-instant',
-    label: 'Llama 3.1 8B',
-    note: 'Very fast and permissive',
-  },
-  {
-    id: 'qwen/qwen3.8-27b',
-    label: 'Qwen3 27B',
-    note: 'Nuanced, multilingual, expressive',
+    id: 'openai/gpt-oss-20b',
+    label: 'GPT-OSS 20B',
+    note: 'Default · free on Groq, fast and capable',
   },
   {
     id: 'openai/gpt-oss-120b',
@@ -88,9 +78,9 @@ export const GROQ_MODELS: GroqModel[] = [
     note: 'Smartest overall, but stricter about mature content',
   },
   {
-    id: 'openai/gpt-oss-20b',
-    label: 'GPT-OSS 20B',
-    note: 'Balanced — fast and capable',
+    id: 'qwen/qwen3.8-27b',
+    label: 'Qwen3 27B',
+    note: 'Nuanced, multilingual, expressive',
   },
   {
     id: 'allam-2-7b',
@@ -108,14 +98,10 @@ export const MODEL_SUGGESTIONS: Record<string, string[]> = {
   openrouter: [
     'cognitivecomputations/dolphin-mixtral-8x22b',
     'sao10k/l3.1-euryale-70b',
-    'nousresearch/hermes-3-llama-3.1-70b',
-    'meta-llama/llama-3.3-70b-instruct',
     'mistralai/mistral-nemo',
     'anthropic/claude-3.5-sonnet',
   ],
   ollama: [
-    'llama3.2',
-    'llama3.1',
     'qwen2.5',
     'mistral-nemo',
     'mixtral',

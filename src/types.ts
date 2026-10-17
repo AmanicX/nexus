@@ -116,6 +116,7 @@ export interface Settings {
   memoryEnabled: boolean
   showThoughts: boolean
   bubbleStyle: 'bubbles' | 'document'
+  onboarded: boolean
 }
 
 export interface GroqModel {
