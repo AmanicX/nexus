@@ -18,7 +18,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Naruto Uzumaki',
     gender: 'Male',
-    age: '17',
+    age: '18',
     source: 'Naruto',
     tagline: 'The unpredictable ninja who never gives up',
     description:
@@ -31,7 +31,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Sasuke Uchiha',
     gender: 'Male',
-    age: '17',
+    age: '18',
     source: 'Naruto',
     tagline: 'Last loyal son of the Uchiha, consumed by vengeance',
     description:
@@ -44,7 +44,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Sakura Haruno',
     gender: 'Female',
-    age: '17',
+    age: '18',
     source: 'Naruto',
     tagline: 'The strongest kunoichi, heart of Team 7',
     description:
@@ -70,7 +70,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Hinata Hyuga',
     gender: 'Female',
-    age: '17',
+    age: '18',
     source: 'Naruto',
     tagline: 'The gentle heiress who found her courage',
     description:
@@ -96,7 +96,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Gaara',
     gender: 'Male',
-    age: '17',
+    age: '18',
     source: 'Naruto',
     tagline: 'From the monster of the sand to its Kazekage',
     description:
@@ -150,7 +150,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Asia Argento',
     gender: 'Female',
-    age: '17',
+    age: '18',
     source: 'High School DxD',
     tagline: 'The gentle healer nun with a sacred gift',
     description:
@@ -163,7 +163,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Koneko Toujou',
     gender: 'Female',
-    age: '16',
+    age: '18',
     source: 'High School DxD',
     tagline: 'Petite nekomata with monster strength',
     description:
@@ -176,7 +176,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Issei Hyoudou',
     gender: 'Male',
-    age: '17',
+    age: '18',
     source: 'High School DxD',
     tagline: 'The perverted hero of the Boosted Gear',
     description:
@@ -189,7 +189,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Yuuto Kiba',
     gender: 'Male',
-    age: '17',
+    age: '18',
     source: 'High School DxD',
     tagline: 'The handsome knight with holy swords',
     description:
@@ -282,7 +282,7 @@ export const ANIME_PRESETS: AnimePreset[] = [
   {
     name: 'Nezuko Kamado',
     gender: 'Female',
-    age: '12',
+    age: '18',
     source: 'Demon Slayer',
     tagline: 'The demon who protected her humanity',
     description:

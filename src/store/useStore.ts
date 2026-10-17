@@ -13,6 +13,17 @@ import { DEFAULT_GLOBAL_PROMPT, DEFAULT_USER_PERSONA, PREVIOUS_DEFAULT_GLOBAL_PR
 import { DEFAULT_BASE_URL } from '@/lib/groq'
 import { uid } from '@/lib/utils'
 
+export const MIN_AGE = 18
+
+/** Characters are adults only: any supplied age below 18 becomes 18, empty stays empty. */
+export function normalizeAge(raw: string | undefined | null): string {
+  const value = (raw ?? '').trim()
+  if (!value) return ''
+  const digits = value.match(/\d+/)
+  if (!digits) return ''
+  return String(Math.max(MIN_AGE, Number(digits[0])))
+}
+
 export interface UIState {
   settingsOpen: boolean
   settingsTab: 'connection' | 'persona' | 'themes' | 'commands' | 'data'
@@ -145,7 +156,7 @@ export const useStore = create<State>()(
           tagline: input.tagline ?? '',
           description: input.description ?? '',
           gender: input.gender ?? '',
-          age: input.age ?? '',
+          age: normalizeAge(input.age),
           tags: input.tags ?? [],
           greeting: input.greeting ?? '',
           canon: input.canon ?? 'custom',
@@ -162,7 +173,15 @@ export const useStore = create<State>()(
       updateCharacter: (id, patch) =>
         set((s) => ({
           characters: s.characters.map((c) =>
-            c.id === id ? { ...c, ...patch } : c,
+            c.id === id
+              ? {
+                  ...c,
+                  ...patch,
+                  ...(patch.age !== undefined
+                    ? { age: normalizeAge(patch.age) }
+                    : {}),
+                }
+              : c,
           ),
         })),
 
@@ -414,14 +433,19 @@ export const useStore = create<State>()(
       replaceAll: (data) =>
         set((s) => ({
           settings: { ...s.settings, ...(data.settings ?? {}) },
-          characters: data.characters ?? s.characters,
+          characters: data.characters
+            ? data.characters.map((c: Character) => ({
+                ...c,
+                age: normalizeAge(c.age),
+              }))
+            : s.characters,
           worlds: data.worlds ?? s.worlds,
           conversations: data.conversations ?? s.conversations,
         })),
     }),
     {
       name: 'nexus-chat-store',
-      version: 4,
+      version: 5,
       migrate: (persisted: any) => {
         if (persisted?.settings?.globalSystemPrompt === PREVIOUS_DEFAULT_GLOBAL_PROMPT) {
           persisted.settings.globalSystemPrompt = DEFAULT_GLOBAL_PROMPT
@@ -436,6 +460,12 @@ export const useStore = create<State>()(
           persisted.settings.cachedModels = []
         }
         if (persisted?.settings) persisted.settings.apiKey = ''
+        // Characters are adults only (18+). Clamp anything saved as a minor.
+        if (Array.isArray(persisted?.characters)) {
+          persisted.characters = persisted.characters.map((c: Character) =>
+            c && c.age ? { ...c, age: normalizeAge(c.age) } : c,
+          )
+        }
         return persisted
       },
       partialize: (s) => ({

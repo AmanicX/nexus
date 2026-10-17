@@ -1,7 +1,7 @@
 {
   "name": "nexus",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Nexus — a multi-theme, memory-aware AI character chat studio for any OpenAI-compatible provider (Groq, OpenRouter, Ollama, LM Studio).",
   "author": "Nexus",
   "license": "MIT",

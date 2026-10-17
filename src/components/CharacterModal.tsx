@@ -12,7 +12,7 @@ import {
   Users,
   X,
 } from 'lucide-react'
-import { useStore } from '@/store/useStore'
+import { MIN_AGE, useStore } from '@/store/useStore'
 import { ANIME_PRESETS, ANIME_SOURCES, avatarFor, presetToCharacter, type AnimePreset } from '@/data/anime'
 import { Modal } from './Modal'
 import { Avatar } from './Avatar'
@@ -112,6 +112,10 @@ export function CharacterModal() {
   const close = () => setUI({ characterModal: null })
   const set = (patch: Partial<Form>) => setForm((f) => ({ ...f, ...patch }))
 
+  const ageRaw = form.age.trim()
+  const ageNum = Number(ageRaw)
+  const ageInvalid = ageRaw !== '' && (Number.isNaN(ageNum) || ageNum < MIN_AGE)
+
   const myCharacters = useMemo(
     () => characters.filter((c) => c.theme === theme),
     [characters, theme],
@@ -149,7 +153,7 @@ export function CharacterModal() {
   }
 
   const save = (startChat: boolean) => {
-    if (!form.name.trim()) return
+    if (!form.name.trim() || ageInvalid) return
     if (editing) {
       updateCharacter(editing.id, form)
       if (startChat) focus(editing.id)
@@ -212,12 +216,12 @@ export function CharacterModal() {
             <button onClick={close} className="btn">
               Cancel
             </button>
-            <button onClick={() => save(false)} disabled={!form.name.trim()} className="btn">
+            <button onClick={() => save(false)} disabled={!form.name.trim() || ageInvalid} className="btn">
               {editing ? 'Save' : 'Save only'}
             </button>
             <button
               onClick={() => save(true)}
-              disabled={!form.name.trim()}
+              disabled={!form.name.trim() || ageInvalid}
               className="btn btn-accent"
             >
               <Sparkles size={15} />
@@ -305,13 +309,34 @@ export function CharacterModal() {
                     className="field"
                   />
                 </Labelled>
-                <Labelled label="Age">
+                <Labelled label="Age" hint={`${MIN_AGE}+ only`}>
                   <input
                     value={form.age}
-                    onChange={(e) => set({ age: e.target.value })}
-                    placeholder="Any"
-                    className="field"
+                    onChange={(e) => set({ age: e.target.value.replace(/\D/g, '').slice(0, 3) })}
+                    onBlur={() => {
+                      const raw = form.age.trim()
+                      if (!raw) return
+                      const n = Number(raw)
+                      if (Number.isNaN(n)) {
+                        set({ age: '' })
+                      } else {
+                        set({ age: String(Math.min(120, Math.max(MIN_AGE, Math.trunc(n)))) })
+                      }
+                    }}
+                    placeholder={`${MIN_AGE}+`}
+                    inputMode="numeric"
+                    min={MIN_AGE}
+                    max={120}
+                    type="number"
+                    aria-invalid={ageInvalid || undefined}
+                    aria-describedby="age-error"
+                    className={cn('field', ageInvalid && 'border-danger')}
                   />
+                  {ageInvalid && (
+                    <p id="age-error" className="mt-1 text-2xs text-danger">
+                      Characters must be {MIN_AGE} or older.
+                    </p>
+                  )}
                 </Labelled>
               </div>
             </div>
