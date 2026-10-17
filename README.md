@@ -162,7 +162,7 @@ The repository ships a full **Capacitor** Android project under [`android/`](and
 **1. Install the prerequisites**
 
 - **JDK 17** (Temurin or OpenJDK 17). Set `JAVA_HOME` to it.
-- **Android SDK** with **Platform 35** and **Build-Tools** (easiest via [Android Studio](https://developer.android.com/studio) → SDK Manager), or the standalone command-line tools.
+- **Android SDK** with **Platform 36** and **Build-Tools** (easiest via [Android Studio](https://developer.android.com/studio) → SDK Manager), or the standalone command-line tools. The Gradle wrapper pins Gradle 8.14.3; `minSdk` is 24 (Android 7.0).
 
 On Windows, set the SDK path so Gradle can find it — create `android/local.properties` (it is gitignored):
 
